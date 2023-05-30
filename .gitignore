@@ -1,0 +1,21 @@
+# cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# data
+data/
+
+# pip
+*.egg-info
+
+# Sphinx documentation
+docs/_build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# env
+.env
+.venv
