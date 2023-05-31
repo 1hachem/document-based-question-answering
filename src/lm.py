@@ -6,6 +6,7 @@ import openai
 
 dotenv.load_dotenv()
 
+from pyllamacpp.model import Model
 from transformers import pipeline, set_seed
 
 
@@ -37,14 +38,17 @@ class GPT2(LM):
         set_seed(42)
         self.generator = pipeline("text-generation", model="gpt2")
 
-    def __call__(self, prompt: str) -> str:
+    def __call__(self, prompt: str, stop_sequence:str="\n") -> str:
         output = self.generator(
-            prompt, max_length=100, num_return_sequences=1, return_full_text=False
+            prompt, max_length=100, num_return_sequences=1, return_full_text=False, stop_sequence=stop_sequence
         )
         return output[0]["generated_text"]
 
 
-if __name__ == "__main__":
-    prompt = "Once upon a time"
-    # print(GPT3()(prompt))
-    print("gpt2", GPT2()(prompt))
+class LlamaQ4(LM):
+    def __init__(self, model_path: str = "models/llama/7B/ggml-model-q4_0.bin") -> None:
+        super().__init__()
+        self.model = Model(model_path=model_path)
+
+    def __call__(self, prompt: str, stop_sequence: str="\n") -> str:
+        return "".join(self.model.generate(prompt=prompt, antiprompt=stop_sequence))
