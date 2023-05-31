@@ -52,7 +52,10 @@ class GPT2(LM):
 class LlamaQ4(LM):
     def __init__(self, model_path: str = "models/llama/7B/ggml-model-q4_0.bin") -> None:
         super().__init__()
-        self.model = Model(model_path=model_path)
+        self.model_path = model_path
 
     def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
-        return "".join(self.model.generate(prompt=prompt, antiprompt=stop_sequence))
+        self.model = Model(model_path=self.model_path)
+        output = self.model.generate(prompt=prompt, antiprompt=stop_sequence)
+        output = "".join(output)
+        return output
