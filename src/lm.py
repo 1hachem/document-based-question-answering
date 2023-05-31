@@ -38,9 +38,13 @@ class GPT2(LM):
         set_seed(42)
         self.generator = pipeline("text-generation", model="gpt2")
 
-    def __call__(self, prompt: str, stop_sequence:str="\n") -> str:
+    def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
         output = self.generator(
-            prompt, max_length=100, num_return_sequences=1, return_full_text=False, stop_sequence=stop_sequence
+            prompt,
+            max_length=100,
+            num_return_sequences=1,
+            return_full_text=False,
+            stop_sequence=stop_sequence,
         )
         return output[0]["generated_text"]
 
@@ -50,5 +54,5 @@ class LlamaQ4(LM):
         super().__init__()
         self.model = Model(model_path=model_path)
 
-    def __call__(self, prompt: str, stop_sequence: str="\n") -> str:
+    def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
         return "".join(self.model.generate(prompt=prompt, antiprompt=stop_sequence))
