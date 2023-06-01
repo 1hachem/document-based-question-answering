@@ -13,6 +13,7 @@ pip install -e .
 ```
 
 # Other requirements
+python version : `3.10.x`
 
 ## Llama
 
