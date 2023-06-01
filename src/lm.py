@@ -6,6 +6,8 @@ import openai
 
 dotenv.load_dotenv()
 
+import torch
+from fastchat.model import get_conversation_template, load_model
 from pyllamacpp.model import Model
 from transformers import pipeline, set_seed
 
@@ -59,3 +61,52 @@ class LlamaQ4(LM):
         output = self.model.generate(prompt=prompt, antiprompt=stop_sequence)
         output = "".join(output)
         return output
+
+
+class VicunaQ8(LM):
+    def __init__(self, model_path: str = "models/vicuna/7B") -> None:
+        super().__init__()
+        self.model_path = model_path
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.num_gpus = 1
+        self.max_gpu_memory = None
+        self.load_8bit = True
+        self.max_new_tokens = 100
+
+    @torch.inference_mode()
+    def __call__(
+        self,
+        message: str,
+    ) -> str:
+        model, tokenizer = load_model(
+            self.model_path,
+            self.device,
+            self.num_gpus,
+            self.max_gpu_memory,
+            self.load_8bit,
+        )
+
+        msg = message
+
+        conv = get_conversation_template(self.model_path)
+        conv.append_message(conv.roles[0], msg)
+        conv.append_message(conv.roles[1], None)
+        prompt = conv.get_prompt()
+
+        input_ids = tokenizer([prompt]).input_ids
+
+        output_ids = model.generate(
+            torch.as_tensor(input_ids).cuda(),
+            do_sample=True,
+            # temperature=self.temperature,
+            max_new_tokens=self.max_new_tokens,
+        )
+        if model.config.is_encoder_decoder:
+            output_ids = output_ids[0]
+        else:
+            output_ids = output_ids[0][len(input_ids[0]) :]
+        outputs = tokenizer.decode(
+            output_ids, skip_special_tokens=True, spaces_between_special_tokens=False
+        )
+
+        return outputs
