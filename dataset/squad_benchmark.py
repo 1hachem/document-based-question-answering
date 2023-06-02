@@ -1,11 +1,9 @@
-import asyncio
-
 from datasets import load_dataset
 
-from src.evaluation import is_correct
 from src.models.simple_index import simple_index
+from src.utils.utils import dump_pickle, read_pickle
 
-dataset = load_dataset("squad", split="validation[:10]")
+dataset = load_dataset("squad", split="validation[:2]")
 
 dataset_val = dataset[:]
 dataset_length = len(dataset_val["answers"])
@@ -13,22 +11,21 @@ dataset_length = len(dataset_val["answers"])
 index = simple_index()
 
 
-def bench_mark():
-    score = 0
+def bench_mark() -> list[tuple]:
+    inference = []
     for context, question, answer in zip(
         dataset_val["context"], dataset_val["question"], dataset_val["answers"]
     ):
         prediction = index(context, question)
-
-        # if await is_correct(prediction, answer["text"][0]):
-        # score += 1
+        ground_truth = answer["text"][0]
 
         print("LLM :", prediction)
-        print("GT :", answer["text"][0])
-
-    return score
+        print("GT :", ground_truth)
+        inference.append((prediction, ground_truth))
+    return inference
 
 
 if __name__ == "__main__":
-    score = bench_mark()
-    print(f"score : {score}/{dataset_length}")
+    results = bench_mark()
+    dump_pickle(results, "outputs/squad/test.pkl")
+    print(read_pickle("outputs/squad/test.pkl"))
