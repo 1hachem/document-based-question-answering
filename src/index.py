@@ -1,9 +1,9 @@
-import pickle
 from abc import ABC, abstractmethod
 
 from src.embedding import Embedder
 from src.similarity_measure import Measure
 from src.text_splitter import Splitter
+from src.utils.utils import dump_pickle, read_pickle
 
 
 class Index:
@@ -39,9 +39,7 @@ class Index:
         return self.measure.return_top(query_emb, self.index)
 
     def save_index(self, path: str) -> None:
-        with open(path, "wb") as f:
-            pickle.dump(self.index, f)
+        dump_pickle(self.index, path=path)
 
     def load_index(self, path: str) -> list[tuple]:
-        with open(path, "rb") as f:
-            return pickle.load(f)
+        return read_pickle(path=path)
