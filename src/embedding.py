@@ -10,6 +10,7 @@ from src.similarity_measure import CosineSimilarity
 class Embedder(ABC):
     @abstractmethod
     def embed(self, texts: list[str]) -> list[list[float]]:
+        """Embed each text in a list of texts"""
         pass
 
 
@@ -37,6 +38,7 @@ class Bert(Embedder):
             outputs = [
                 self.model(**input, output_hidden_states=True) for input in inputs
             ]
+            # take the average of the last hidden-state of each token to represent the sentence
             outputs = [
                 output.hidden_states[-1].mean(dim=1).flatten().tolist()
                 for output in outputs
