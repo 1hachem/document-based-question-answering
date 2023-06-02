@@ -9,7 +9,8 @@ dotenv.load_dotenv()
 import torch
 from fastchat.model import get_conversation_template, load_model
 from pyllamacpp.model import Model
-from transformers import pipeline, set_seed
+from transformers import (AutoModelForCausalLM, AutoTokenizer, pipeline,
+                          set_seed)
 
 
 class LM(ABC):
@@ -110,3 +111,30 @@ class VicunaQ8(LM):
         )
 
         return outputs
+
+
+class GPTJ(LM):
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6b")
+        self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6b")
+        # self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"
+
+    def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
+        pipeline_ = pipeline(
+            "text-generation",
+            model=self.model,
+            tokenizer=self.tokenizer,
+            stop_sequence=stop_sequence,
+            device=self.device,
+        )
+        output = pipeline_(prompt, max_new_tokens=20, return_full_text=False)
+        return output[0]["generated_text"]
+
+
+if __name__ == "__main__":
+    llm = GPTJ()
+    output = llm("Hello, my dog is cute")
+    print(output)
