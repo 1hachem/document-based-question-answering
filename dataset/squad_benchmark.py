@@ -1,31 +1,21 @@
 from datasets import load_dataset
 
-from src.models.simple_index import simple_index
+from src.index import Index
 from src.utils.utils import dump_pickle, read_pickle
+from src.benchmark import bench_mark
 
-dataset = load_dataset("squad", split="validation[:2]")
+## Load dataset
+dataset = load_dataset("squad", split="validation[:1]")
 
 dataset_val = dataset[:]
 dataset_length = len(dataset_val["answers"])
 
-index = simple_index()
+contexts, questions, answers = (dataset_val["context"], dataset_val["question"], [answer["text"][0] for answer in dataset_val["answers"]]) 
 
-
-def bench_mark() -> list[tuple]:
-    inference = []
-    for context, question, answer in zip(
-        dataset_val["context"], dataset_val["question"], dataset_val["answers"]
-    ):
-        prediction = index(context, question)
-        ground_truth = answer["text"][0]
-
-        print("LLM :", prediction)
-        print("GT :", ground_truth)
-        inference.append((prediction, ground_truth))
-    return inference
-
-
+print(dataset_length)
 if __name__ == "__main__":
-    results = bench_mark()
+    results = bench_mark(answers=answers, contexts=contexts, questions=questions)
     dump_pickle(results, "outputs/squad/test.pkl")
     print(read_pickle("outputs/squad/test.pkl"))
+
+
