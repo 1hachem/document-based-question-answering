@@ -4,6 +4,7 @@
 - python version : `3.10.11`
 - system : `Ubuntu 20.04.6 LTS x86_64`
 - GPU : `NVIDIA GeForce GTX 1080 Ti`
+- RAM : `126GB`
 
 # Build
 - create a virtual environment
@@ -33,7 +34,7 @@ python src/transformers/models/llama/convert_llama_weights_to_hf.py \
     --input_dir /path/to/downloaded/llama/weights --model_size 7B --output_dir /output/path
 ```
 
-- Apply the deltas weights of vicuna on llama weights (huggingface format, i.e after conversion).
+- Apply the delta weights of vicuna on llama weights (huggingface format, i.e after conversion).
 
 ```bash
 python3 -m fastchat.model.apply_delta \
@@ -43,7 +44,7 @@ python3 -m fastchat.model.apply_delta \
 ```
 
 ## Test
-- you can test of the models are working by running :
+- you can test if the models are working by running :
 ```bash
 python scripts/run_llama.py
 python scripts/run_vicuna.py
