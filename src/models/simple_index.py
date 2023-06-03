@@ -1,27 +1,28 @@
-from src.embedding import MiniLM
+from src.embedding import MiniLM, Bert
 from src.index import Index
-from src.lm import GPT2
+from src.lm import GPT2, VicunaQ8, GPTJ
 from src.similarity_measure import CosineSimilarity
-from src.text_splitter import TokenSplitter
+from src.text_splitter import TokenSplitter, SentenceSplitter
 
 
 class simple_index:
     def __init__(self) -> None:
-        self.splitter = TokenSplitter(chunk_size=20, chunk_overlap=6)
-        self.embedder = MiniLM()
-        self.measure = CosineSimilarity(k=3)
-        self.llm = GPT2()
+        self.splitter = SentenceSplitter()
+        self.embedder = Bert()
+        self.measure = CosineSimilarity(k=2)
+        self.llm = GPTJ()
 
     def __call__(self, context: str, question: str) -> str:
         index = Index(
-            document=context,
-            path=None,
             embedder=self.embedder,
-            measure=self.measure,
             splitter=self.splitter,
         )
 
-        candidates = index.candidates(question)
+        indexed_context = index(context)
+
+        query_emb = self.embedder.embed([question])[0]
+        candidates = self.measure.return_top(query_emb, indexed_context)
+
         print(candidates)
 
         sub_context = "\n\n".join(candidates)
