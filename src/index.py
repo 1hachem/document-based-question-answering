@@ -9,36 +9,33 @@ from src.utils.utils import dump_pickle, read_pickle
 class Index:
     def __init__(
         self,
-        document: str | None,
-        path: str | None,
         embedder: Embedder,
-        measure: Measure,
         splitter: Splitter,
     ) -> None:
         super().__init__()
 
-        self.embedder = embedder
-        self.measure = measure
         self.splitter = splitter
+        self.embedder = embedder
 
+
+    def __call__(self, document: str, index_path: str|None= None) -> list[str]:
+        """returns an indexed document"""    
         if document:
-            self.document = document
-            self.index = self.index_document()
-        elif path:
-            self.index = self.load_index(path)
+            self.index= index = self.index_document(document)
+        elif index_path:
+            self.index= index = self.load_index(index_path)
         else:
-            raise ValueError("Either document or a path must be provided")
+            raise ValueError("Either document or an index_path must be provided")
 
-    def index_document(self) -> list[tuple]:
-        chunks = self.splitter.split(self.document)
+        return index
+    
+    def index_document(self, document:str) -> list[tuple]:
+        chunks = self.splitter.split(document)
         embeddings = self.embedder.embed(chunks)
         return list(zip(chunks, embeddings))
 
-    def candidates(self, query: str) -> list[str]:
-        query_emb = self.embedder.embed([query])[0]
-        return self.measure.return_top(query_emb, self.index)
-
     def save_index(self, path: str) -> None:
+        assert self.index, "Index is empty"
         dump_pickle(self.index, path=path)
 
     def load_index(self, path: str) -> list[tuple]:
