@@ -29,7 +29,7 @@ class GPT3(LM):
             model="text-davinci-003",
             prompt=prompt,
             temperature=0.1,
-            max_tokens=100,
+            max_tokens=20,
             presence_penalty=1,
         )
         return response.choices[0].text
@@ -44,7 +44,7 @@ class GPT2(LM):
     def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
         output = self.generator(
             prompt,
-            max_length=100,
+            max_new_tokens=20,
             num_return_sequences=1,
             return_full_text=False,
             stop_sequence=stop_sequence,
@@ -59,7 +59,7 @@ class LlamaQ4(LM):
 
     def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
         self.model = Model(model_path=self.model_path)
-        output = self.model.generate(prompt=prompt, antiprompt=stop_sequence)
+        output = self.model.generate(prompt=prompt, antiprompt=stop_sequence, n_predict=20)
         output = "".join(output)
         return output
 
@@ -72,7 +72,7 @@ class VicunaQ8(LM):
         self.num_gpus = 1
         self.max_gpu_memory = None
         self.load_8bit = True
-        self.max_new_tokens = 100
+        self.max_new_tokens = 20
 
     @torch.inference_mode()
     def __call__(
