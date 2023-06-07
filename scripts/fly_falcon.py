@@ -1,6 +1,6 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import transformers
 import torch
+import transformers
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 model = "tiiuae/falcon-7b"
 
@@ -14,8 +14,8 @@ pipeline = transformers.pipeline(
     device_map="auto",
 )
 sequences = pipeline(
-    """
-    from this context : Once upon a time, in the small town of Willowbrook, there lived a curious young girl named Emily. 
+    [
+        """from this context : Once upon a time, in the small town of Willowbrook, there lived a curious young girl named Emily. 
     With her bright eyes and an insatiable thirst for adventure, she was always seeking new experiences and discoveries.
     One sunny morning, Emily ventured into the dense forest that surrounded her town. 
     She had heard tales of a hidden waterfall deep within the woods, and her heart was set on finding it. 
@@ -29,13 +29,15 @@ sequences = pipeline(
     cascading down from the rocks above into a crystal-clear pool below. The sight was breathtaking, 
     and Emily couldn't help but be in awe of its beauty.
     answer this question : where did emily live ?
-    answer : 
-    """,
-    max_length=400,
+    answer :""",
+        "hello",
+    ],
+    max_new_tokens=10,
     do_sample=True,
     top_k=10,
+    temperature=3e-4,
     num_return_sequences=1,
     eos_token_id=tokenizer.eos_token_id,
+    return_full_text=False,
 )
-for seq in sequences:
-    print(f"Result: {seq['generated_text']}")
+print(sequences)
