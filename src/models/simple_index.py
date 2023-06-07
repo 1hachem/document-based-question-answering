@@ -1,8 +1,8 @@
-from src.embedding import MiniLM, Bert
+from src.embedding import Bert, MiniLM
 from src.index import Index
-from src.lm import GPT2, VicunaQ8, GPTJ
+from src.lm import GPT2, GPTJ
 from src.similarity_measure import CosineSimilarity
-from src.text_splitter import TokenSplitter, SentenceSplitter
+from src.text_splitter import SentenceSplitter, TokenSplitter
 
 
 class simple_index:
