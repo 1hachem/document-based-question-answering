@@ -1,8 +1,13 @@
+from src import embedding_models, llms, measures, splitters
 from src.index import Index
-from src import llms, splitters, embedding_models, measures
 
-def bench_mark(contexts: list[str], questions: list[str], answers: list[str]) -> list[tuple]:
-    assert len(contexts) == len(questions) == len(answers), "contexts, questions and answers must have the same length"
+
+def bench_mark(
+    contexts: list[str], questions: list[str], answers: list[str]
+) -> list[tuple]:
+    assert (
+        len(contexts) == len(questions) == len(answers)
+    ), "contexts, questions and answers must have the same length"
     inference = []
     for context, question, answer in zip(contexts, questions, answers):
         for splitter in splitters:
@@ -11,7 +16,7 @@ def bench_mark(contexts: list[str], questions: list[str], answers: list[str]) ->
                 index = Index(embedder=embedder(), splitter=splitter())
                 indexed_context = index(document=context)
                 query_emb = index.embedder.embed([question])[0]
-                
+
                 for measure in measures:
                     candidates = measure().return_top(query_emb, indexed_context)
                     print(candidates)

@@ -17,19 +17,18 @@ class Index:
         self.splitter = splitter
         self.embedder = embedder
 
-
-    def __call__(self, document: str, index_path: str|None= None) -> list[str]:
-        """returns an indexed document"""    
+    def __call__(self, document: str, index_path: str | None = None) -> list[str]:
+        """returns an indexed document"""
         if document:
-            self.index= index = self.index_document(document)
+            self.index = index = self.index_document(document)
         elif index_path:
-            self.index= index = self.load_index(index_path)
+            self.index = index = self.load_index(index_path)
         else:
             raise ValueError("Either document or an index_path must be provided")
 
         return index
-    
-    def index_document(self, document:str) -> list[tuple]:
+
+    def index_document(self, document: str) -> list[tuple]:
         chunks = self.splitter.split(document)
         embeddings = self.embedder.embed(chunks)
         return list(zip(chunks, embeddings))
