@@ -49,3 +49,9 @@ python3 -m fastchat.model.apply_delta \
 python scripts/run_llama.py
 python scripts/run_vicuna.py
 ```
+
+
+# Notes
+
+- temperature of vicuna is set to 0
+- temperature of falcon is set to 3e-4
