@@ -8,47 +8,33 @@ dotenv.load_dotenv()
 
 import torch
 from pyllamacpp.model import Model
-from transformers import (AutoModelForCausalLM, AutoTokenizer, pipeline,
-                          set_seed)
+
+import transformers
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, set_seed
 
 
 class LM(ABC):
     @abstractmethod
-    def __call__(self, prompt: str, **kwargs: any) -> str:
+    def __call__(self, requests: list[str], **kwargs: any) -> list[str]:
         pass
-
-
-class GPT3(LM):
-    def __init__(self) -> None:
-        super().__init__()
-        openai.api_key = os.getenv("OPENAI_API_KEY")
-
-    def __call__(self, prompt: str) -> str:
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=prompt,
-            temperature=0.1,
-            max_tokens=20,
-            presence_penalty=1,
-        )
-        return response.choices[0].text
 
 
 class GPT2(LM):
     def __init__(self) -> None:
         super().__init__()
-        set_seed(42)
-        self.generator = pipeline("text-generation", model="gpt2")
+        self.model_name = "gpt2"
 
-    def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
-        output = self.generator(
-            prompt,
+    def __call__(self, requests: list[str], stop_sequence: str = "\n") -> list[str]:
+        self.generator = pipeline("text-generation", model=self.model_name)
+        sequences = self.generator(
+            requests,
             max_new_tokens=20,
             num_return_sequences=1,
             return_full_text=False,
             stop_sequence=stop_sequence,
         )
-        return output[0]["generated_text"]
+        outputs = [seq[0]["generated_text"] for seq in sequences]
+        return outputs
 
 
 class LlamaQ4(LM):
@@ -73,7 +59,7 @@ class GPTJ(LM):
         self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6b")
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
+    def __call__(self, requests: list[str], stop_sequence: str = "\n") -> list[str]:
         pipeline_ = pipeline(
             "text-generation",
             model=self.model,
@@ -81,11 +67,43 @@ class GPTJ(LM):
             stop_sequence=stop_sequence,
             device=self.device,
         )
-        output = pipeline_(prompt, max_new_tokens=20, return_full_text=False)
-        return output[0]["generated_text"]
+        sequences = pipeline_(
+            requests, max_new_tokens=10, num_return_sequences=1, return_full_text=False
+        )
+        outputs = [seq[0]["generated_text"] for seq in sequences]
+        return outputs
+
+
+class Falcon(LM):
+    def __init__(self) -> None:
+        super().__init__()
+        self.model_name = "tiiuae/falcon-7b"
+
+    def __call__(self, requests: list[str]) -> list[str]:
+        tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        pipeline_ = transformers.pipeline(
+            "text-generation",
+            model=self.model_name,
+            tokenizer=tokenizer,
+            torch_dtype=torch.bfloat16,
+            trust_remote_code=True,
+            device_map="auto",
+        )
+        sequences = pipeline_(
+            requests,
+            max_new_tokens=10,
+            do_sample=True,
+            top_k=10,
+            temperature=3e-4,
+            num_return_sequences=1,
+            eos_token_id=tokenizer.eos_token_id,
+            return_full_text=False,
+        )
+        outputs = [seq[0]["generated_text"] for seq in sequences]
+        return outputs
 
 
 if __name__ == "__main__":
     llm = GPTJ()
-    output = llm("Hello, my dog is cute")
+    output = llm(["Hello, my dog is cute", "hi my name is"])
     print(output)
