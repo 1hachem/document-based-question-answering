@@ -1,11 +1,12 @@
 from datasets import load_dataset
 
-from src.benchmark import bench_mark
-from src.index import Index
-from src.utils.utils import dump_pickle, read_pickle
+from src.benchmark import construct_indexes, inference
+from src.utils.utils import save_json
+
+PATH = "outputs/indexes/squad.json"
 
 ## Load dataset
-dataset = load_dataset("squad", split="validation[:1]")
+dataset = load_dataset("squad", split="validation[:100]")
 
 dataset_val = dataset[:]
 dataset_length = len(dataset_val["answers"])
@@ -16,8 +17,9 @@ contexts, questions, answers = (
     [answer["text"][0] for answer in dataset_val["answers"]],
 )
 
-print(dataset_length)
+print("dataset_length", dataset_length)
+
 if __name__ == "__main__":
-    results = bench_mark(answers=answers, contexts=contexts, questions=questions)
-    dump_pickle(results, "outputs/squad/test.pkl")
-    print(read_pickle("outputs/squad/test.pkl"))
+    indexes = construct_indexes(answers=answers, contexts=contexts, questions=questions)
+    indexes = inference(indexes)
+    save_json(indexes, PATH)
