@@ -9,7 +9,7 @@ from src.lm import LM
 
 
 class SimpleChatIO:
-    """this is a workaround to use fastchat as a "load once run forever" model"""
+    """this is a workaround to use fastchat for batched inference"""
 
     def __init__(self, requests: list[str]) -> None:
         self.requests = requests
