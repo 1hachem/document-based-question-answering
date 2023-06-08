@@ -40,4 +40,5 @@ sequences = pipeline(
     eos_token_id=tokenizer.eos_token_id,
     return_full_text=False,
 )
-print(sequences)
+outputs = [seq["generated_text"] for seq in sequences[0]]
+print(outputs)
