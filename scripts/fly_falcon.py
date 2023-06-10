@@ -1,6 +1,5 @@
 from src.lm import Falcon
 
-
 if __name__ == "__main__":
     requests = [
         """from this context : Once upon a time, in the small town of Willowbrook, there lived a curious young girl named Emily. 
