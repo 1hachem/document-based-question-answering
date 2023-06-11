@@ -1,0 +1,1 @@
+lmql serve-model gpt2-large --cuda
