@@ -9,5 +9,6 @@ SAVE_PATH = "results/summary/squad.json"
 if __name__ == "__main__":
     indexes = read_json(PATH)
     indexes = asyncio.run(evaluate_inferences(indexes))
+    save_json(indexes, PATH)
     table = parse_results(indexes)
     save_json(table, SAVE_PATH)
