@@ -5,8 +5,15 @@ from datasets import load_dataset
 from src.benchmark import construct_indexes, inference
 from src.utils.utils import save_json
 
-PATH = "results/squad.json"
+PATH = "results/benchmarks/squad.json"
 NUMBER_OF_SAMPLES = 20
+
+try:
+    with open(PATH, "w") as f:
+        pass
+except:
+    raise Exception(f"provided path is wrong :{PATH}")
+
 
 ## Load dataset
 dataset = load_dataset("squad", split="validation[:]")
