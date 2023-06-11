@@ -1,14 +1,19 @@
+import random
+
 from datasets import load_dataset
 
 from src.benchmark import construct_indexes, inference
 from src.utils.utils import save_json
 
-PATH = "outputs/indexes/squad.json"
+PATH = "results/squad.json"
+NUMBER_OF_SAMPLES = 20
 
 ## Load dataset
-dataset = load_dataset("squad", split="validation[:100]")
+dataset = load_dataset("squad", split="validation[:]")
 
-dataset_val = dataset[:]
+dataset_val = dataset.select(
+    random.sample(range(len(dataset["answers"])), NUMBER_OF_SAMPLES)
+)
 dataset_length = len(dataset_val["answers"])
 
 contexts, questions, answers = (
