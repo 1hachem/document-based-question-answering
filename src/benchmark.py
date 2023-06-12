@@ -20,7 +20,7 @@ def construct_indexes(
                 triplets = []
                 for context, question, answer in zip(contexts, questions, answers):
                     indexed_context = index(document=context)
-                    query_emb = index.embedder.embed([question])[0]
+                    query_emb = index.embedder.embed_query([question])[0]
 
                     candidates = measure().return_top(query_emb, indexed_context)
                     sub_context = "\n\n".join(candidates)
@@ -93,9 +93,9 @@ def parse_results(indexes: list[dict]):
 
     for index in indexes:
         row = {
-            "text_splitter": index["text_splitter"],
+            # "text_splitter": index["text_splitter"],
             "embedder": index["embedder"],
-            "measure": index["measure"],
+            # "measure": index["measure"],
         }
         for llm in llms_names:
             row[llm] = 0

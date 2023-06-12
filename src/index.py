@@ -30,7 +30,7 @@ class Index:
 
     def index_document(self, document: str) -> list[tuple]:
         chunks = self.splitter.split(document)
-        embeddings = self.embedder.embed(chunks)
+        embeddings = self.embedder.embed_context(chunks)
         return list(zip(chunks, embeddings))
 
     def save_index(self, path: str) -> None:
