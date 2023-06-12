@@ -22,3 +22,21 @@ def read_json(path: str):
 def save_json(data: dict, path: str):
     with open(path, "w") as file:
         json.dump(data, file, indent=4)
+
+
+def read_jsonl(file_path):
+    """
+    Read a JSONL file and return a list of dictionaries.
+
+    Args:
+        file_path (str): Path to the JSONL file.
+
+    Returns:
+        list: List of dictionaries parsed from the JSONL file.
+    """
+    data_list = []
+    with open(file_path, "r") as file:
+        for line in file:
+            json_obj = json.loads(line.strip())
+            data_list.append(json_obj)
+    return data_list
