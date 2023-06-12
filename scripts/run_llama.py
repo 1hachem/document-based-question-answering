@@ -1,5 +1,5 @@
-from src.lm import LlamaQ4
+from src.lm import Llama
 
-if __name__ == "__main__":
-    llm = LlamaQ4()
-    print(llm("hello"))
+prompts = ["hello llama", "how is the weather in dreamland ?"]
+llm = Llama()
+llm(prompts)

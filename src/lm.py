@@ -1,16 +1,20 @@
-import os
 from abc import ABC, abstractmethod
 
 import dotenv
-import openai
 
 dotenv.load_dotenv()
 
-import torch
-from pyllamacpp.model import Model
+import gc
 
+import torch
 import transformers
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, set_seed
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    LlamaForCausalLM,
+    LlamaTokenizer,
+    pipeline,
+)
 
 
 class LM(ABC):
@@ -37,18 +41,34 @@ class GPT2(LM):
         return outputs
 
 
-class LlamaQ4(LM):
-    def __init__(self, model_path: str = "models/llama/7B/ggml-model-q4_0.bin") -> None:
+class Llama(LM):
+    def __init__(self, model_path: str = "models/openllama/7B") -> None:
         super().__init__()
         self.model_path = model_path
-
-    def __call__(self, prompt: str, stop_sequence: str = "\n") -> str:
-        self.model = Model(model_path=self.model_path)
-        output = self.model.generate(
-            prompt=prompt, antiprompt=stop_sequence, n_predict=20
+        self.tokenizer = LlamaTokenizer.from_pretrained(model_path)
+        self.model = LlamaForCausalLM.from_pretrained(
+            model_path,
+            torch_dtype=torch.float16,
+            device_map="auto",
         )
-        output = "".join(output)
-        return output
+
+    def __call__(self, requests: list[str]) -> list[str]:
+        outputs = []
+        for prompt in requests:
+            input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
+            generation_output = self.model.generate(
+                input_ids=input_ids,
+                max_new_tokens=10,
+                temperature=0.0,
+                num_return_sequences=1,
+            )
+            output = self.tokenizer.decode(
+                generation_output[0], skip_special_tokens=True
+            )
+            output = output.strip(prompt)  # eq : return_full_sequence=False
+            outputs.append(output)
+            print(output)
+        return outputs
 
 
 class GPTJ(LM):
@@ -77,7 +97,9 @@ class GPTJ(LM):
 class Falcon(LM):
     def __init__(self) -> None:
         super().__init__()
-        self.model_name = "tiiuae/falcon-7b"
+        gc.collect()
+        torch.cuda.empty_cache()
+        self.model_name = "models/falcon/7B/snapshots/falcon"
 
     def __call__(self, requests: list[str]) -> list[str]:
         tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -91,7 +113,7 @@ class Falcon(LM):
         )
         sequences = pipeline_(
             requests,
-            max_new_tokens=10,
+            max_new_tokens=20,
             do_sample=True,
             top_k=10,
             temperature=3e-4,
@@ -104,6 +126,6 @@ class Falcon(LM):
 
 
 if __name__ == "__main__":
-    llm = GPTJ()
+    llm = Llama()
     output = llm(["Hello, my dog is cute", "hi my name is"])
     print(output)
