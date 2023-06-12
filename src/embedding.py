@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
 
 import torch
+import torch.nn.functional as F
 from sentence_transformers import SentenceTransformer
-from transformers import AutoTokenizer, BertForQuestionAnswering
+from torch import Tensor
+from transformers import AutoModel, AutoTokenizer, BertForQuestionAnswering
 
 from src.similarity_measure import CosineSimilarity
 
@@ -10,8 +12,16 @@ from src.similarity_measure import CosineSimilarity
 class Embedder(ABC):
     @abstractmethod
     def embed(self, texts: list[str]) -> list[list[float]]:
-        """Embed each text in a list of texts"""
+        """Embed a list of contexts"""
         pass
+
+    def embed_query(self, texts: list[str]) -> list[list[float]]:
+        """Embed a list of queries"""
+        return self.embed(texts)
+
+    def embed_context(self, texts: list[str]) -> list[list[float]]:
+        """Embed a list of contexts"""
+        return self.embed(texts)
 
 
 class MiniLM(Embedder):
@@ -47,10 +57,41 @@ class Bert(Embedder):
         return outputs
 
 
-if __name__ == "__main__":
-    # output = MiniLM().embed(["Hello, my dog is cute", "how to kill a bird"])
-    # print(output.shape)
+class E5(Embedder):
+    def __init__(self) -> None:
+        super().__init__()
+        self.tokenizer = AutoTokenizer.from_pretrained("intfloat/e5-small")
+        self.model = AutoModel.from_pretrained("intfloat/e5-small")
 
-    bert = Bert()
-    output = bert.embed(["what is my name", "my name is not bob"])
-    print(CosineSimilarity().measure(output[0], output[1]))
+    def average_pool(
+        self, last_hidden_states: Tensor, attention_mask: Tensor
+    ) -> Tensor:
+        last_hidden = last_hidden_states.masked_fill(
+            ~attention_mask[..., None].bool(), 0.0
+        )
+        return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
+
+    def embed(self, texts: list[str]) -> list[list[float]]:
+        batch_dict = self.tokenizer(texts, padding=True, return_tensors="pt")
+
+        outputs = self.model(**batch_dict)
+        embeddings = self.average_pool(
+            outputs.last_hidden_state, batch_dict["attention_mask"]
+        )
+
+        # (Optionally) normalize embeddings
+        embeddings = F.normalize(embeddings, p=2, dim=1)
+        return embeddings.detach().tolist()
+
+    def embed_query(self, texts: list[str]) -> list[list[float]]:
+        return self.embed(["query :" + text for text in texts])
+
+    def embed_context(self, texts: list[str]) -> list[list[float]]:
+        return self.embed(["passage :" + text for text in texts])
+
+
+if __name__ == "__main__":
+    emb = Bert()
+    queries = emb.embed_query(["what is my name ?", "what is not my name ?"])
+    contexts = emb.embed_context(["my name hachem", "my name is not bob"])
+    print(CosineSimilarity().measure(queries[1], contexts[1]))
