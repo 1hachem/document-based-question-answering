@@ -32,7 +32,7 @@ class GPT2(LM):
         self.generator = pipeline("text-generation", model=self.model_name)
         sequences = self.generator(
             requests,
-            max_new_tokens=20,
+            max_new_tokens=30,
             num_return_sequences=1,
             return_full_text=False,
             stop_sequence=stop_sequence,
@@ -58,14 +58,13 @@ class Llama(LM):
             input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
             generation_output = self.model.generate(
                 input_ids=input_ids,
-                max_new_tokens=10,
+                max_new_tokens=30,
                 temperature=0.0,
-                num_return_sequences=1,
             )
             output = self.tokenizer.decode(
                 generation_output[0], skip_special_tokens=True
             )
-            output = output.strip(prompt)  # eq : return_full_sequence=False
+            output = output.replace(prompt, "")  # eq : return_full_sequence=False
             outputs.append(output)
             print(output)
         return outputs
@@ -88,18 +87,18 @@ class GPTJ(LM):
             device=self.device,
         )
         sequences = pipeline_(
-            requests, max_new_tokens=10, num_return_sequences=1, return_full_text=False
+            requests, max_new_tokens=30, num_return_sequences=1, return_full_text=False
         )
         outputs = [seq[0]["generated_text"] for seq in sequences]
         return outputs
 
 
 class Falcon(LM):
-    def __init__(self) -> None:
+    def __init__(self, model_path: str = "models/falcon/7B/snapshots/falcon") -> None:
         super().__init__()
         gc.collect()
         torch.cuda.empty_cache()
-        self.model_name = "models/falcon/7B/snapshots/falcon"
+        self.model_name = model_path
 
     def __call__(self, requests: list[str]) -> list[str]:
         tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -113,7 +112,7 @@ class Falcon(LM):
         )
         sequences = pipeline_(
             requests,
-            max_new_tokens=20,
+            max_new_tokens=30,
             do_sample=True,
             top_k=10,
             temperature=3e-4,
