@@ -73,14 +73,13 @@ def inference(indexes: list[dict]) -> list[str]:
 
 
 async def evaluate_inferences(indexes: list[dict]) -> list[dict]:
+    llms_names = indexes[0]["triplets"][0]["predictions"].keys()
     for index in indexes:
         for triplet in index["triplets"]:
-            for llm in llms:
-                triplet["predictions"][llm().__class__.__name__][
-                    "evaluation"
-                ] = await is_correct(
+            for llm in llms_names:
+                triplet["predictions"][llm]["evaluation"] = await is_correct(
                     triplet["answer"],
-                    triplet["predictions"][llm().__class__.__name__]["answer"],
+                    triplet["predictions"][llm]["answer"],
                 )
 
     return indexes
