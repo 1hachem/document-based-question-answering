@@ -3,7 +3,7 @@
 # System specs
 - python version : `3.10.11`
 - system : `Ubuntu 20.04.6 LTS x86_64`
-- GPU : `NVIDIA GeForce GTX 1080 Ti`
+- GPU : `1x NVIDIA GeForce GTX 1080 Ti and 2x NVIDIA GeForce RTX 3060`
 - RAM : `126GB`
 
 # Build
@@ -20,12 +20,15 @@ pip install -e .
 
 # Other requirements
 
-## Llama
-- install the weights into `models/llama/7B` using this [script](https://github.com/Elyah2035/llama-dl/blob/main/llama.sh)
+## Llama 7B
+we are using [OpenLlama](https://github.com/openlm-research/open_llama) and open reproduction of Llama, weights for the 7B model are available on [here](https://huggingface.co/openlm-research/open_llama_7b).
 
-- follow the instructions at [llama.cpp](https://github.com/ggerganov/llama.cpp) to quantize the model (put the quantized model at `models/llama/7B/ggml-model-q4_0.bin`)
+```bash
+git lfs install
+git clone https://huggingface.co/openlm-research/open_llama_7b models/openllama/7B
+```
 
-## Vicuna
+## Vicuna 7B
 
 - Use this conversion [script](https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/convert_llama_weights_to_hf.py) on the consolidated weights to convert them to huggingface format.
 
@@ -43,11 +46,28 @@ python3 -m fastchat.model.apply_delta \
     --delta-path lmsys/vicuna-7b-delta-v1.1
 ```
 
+## Falcon 7B
+
+
+## datasets
+
+- [Google natural questions](https://ai.google.com/research/NaturalQuestions/download) (we are using the dev set)
+
+```bash
+gzip -d dataset/v1.0-simplified_nq-dev-all.jsonl.gz 
+```
+sample a smaller dataset
+
+```bash
+python scripts/sample_qa.py 
+```
+
 ## Test
 - you can test if the models are working by running :
 ```bash
 python scripts/run_llama.py
 python scripts/run_vicuna.py
+python scripts/fly_falcon.py
 ```
 
 
@@ -55,3 +75,4 @@ python scripts/run_vicuna.py
 
 - temperature of vicuna is set to 0
 - temperature of falcon is set to 3e-4
+- temperature of llama is set to 0
