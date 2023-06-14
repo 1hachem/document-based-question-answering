@@ -1,0 +1,1163 @@
+[
+    {
+        "text_splitter": "SentenceSplitter",
+        "embedder": "Bert",
+        "measure": "CosineSimilarity",
+        "triplets": [
+            {
+                "question": "What path does a ball thrown up and down in a moving vehicle take when seen by an outside observer? ",
+                "sub_context": "A person can throw a ball straight up in the air and catch it as it falls down without worrying about applying a force in the direction the vehicle is moving.",
+                "answer": "parabolic",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "When seen by an outside observer, a ball thrown up and down in a moving vehicle takes a cur",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The ball will move in a straight line.\nQuestion: What is the direction of the ball\u2019s motion when seen by an outside observer? ",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The ball is thrown up and falls down.\n\nA: The ball is thrown up and falls down.\n\nA: The ball is thrown",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "Cypiddids are not what?",
+                "sub_context": "The position of the ctenophores in the evolutionary family tree of animals has long been debated, and the majority view at present, based on molecular phylogenetics, is that cnidarians and bilaterians are more closely related to each other than either is to ctenophores.",
+                "answer": "monophyletic",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Cypiddids are not considered to be closely related to ctenophores, based on",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Not a ctenophore\nQuestion: What is the name of the group of animals that includes the ctenophores?\nAnswer: C",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Ctenophores are not cnidarians.\nQuestion: What is the name of the ctenophore that is the most closely",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What responsibilities were pharmacy technicians formerly limited to?",
+                "sub_context": "Pharmacy technicians are now more dependent upon automation to assist them in their new role dealing with patients' prescriptions and patient safety issues.",
+                "answer": "within the dispensary compounding/dispensing medications",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Pharmacy technicians were formerly limited to tasks such as filling prescriptions, preparing medic",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Pharmacy technicians were formerly limited to counting pills and filling prescriptions.\nAnswer: Pharmacy technicians are now more dependent upon automation to assist them in their new role",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Pharmacy technicians were formerly limited to the tasks of filling prescriptions, counting pills, and labeling bottles.\nQuestion: What are the new responsibilities",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "Where did Kublai build his administration's strength?",
+                "sub_context": "After strengthening his government in northern China, Kublai pursued an expansionist policy in line with the tradition of Mongol and Chinese imperialism.",
+                "answer": "northern China",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Kublai built the strength of his administration in northern China.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Kublai built his administration's strength in the north of China.\nQuestion: What was the result of Kublai's expansionist",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " Kublai built his administration's strength in northern China.\nQuestion: What was the main reason for Kublai's expansionist",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What was the corporate entity American Broadcasting-Paramount Theatres renamed in 1965? ",
+                "sub_context": "In 1965, the corporate entity, American Broadcasting-Paramount Theatres, was renamed as the American Broadcasting Companies, while its cinema division became ABC Theatres;[citation needed] its recording division was renamed ABC Records in 1966.",
+                "answer": "American Broadcasting Companies",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The corporate entity American Broadcasting-Paramount Theatres was renamed as the American Broadcasting",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " ABC Theatres\nQuestion: What was the corporate entity American Broadcasting-Paramount Theatres renamed in 1965? \nAnswer:",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " American Broadcasting Companies\n\nA: The correct answer is American Broadcasting Companies.\nThe correct answer is American Broadcasting Companies.\nThe correct answer is American",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "When were the French wars of religion?",
+                "sub_context": "The French Wars of Religion in the 16th century and French Revolution in the 18th successively destroyed much of what existed in the way of the architectural and artistic remnant of this Norman creativity.",
+                "answer": "16th century",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The French Wars of Religion were a series of conflicts that took place in France between the Protestant H",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The French Wars of Religion were a series of religious wars fought in France between the Catholic League and the Huguenots from 1562 to 159",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The French wars of religion were a series of conflicts in 16th century France between Roman Catholics and Protestants.\nQuestion: What was",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "When was the agreement to acquire ABC approved by UPT's board?",
+                "sub_context": "On June 6, 1951, the tentative agreement was approved by UPT's board of directors.",
+                "answer": "June 6, 1951",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The agreement to acquire ABC was approved by UPT's board of directors on June",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The tentative agreement was approved by UPT's board of directors on June 6, 1951.\nQuestion: When was the agreement to",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " On June 6, 1951, the tentative agreement was approved by UPT's board of directors.\nQuestion:",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What is 'grey literature'?",
+                "sub_context": "According to IPCC guidelines, authors should give priority to peer-reviewed sources.",
+                "answer": "non-peer-reviewed sources",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Grey literature refers to publications that are not published through traditional channels, such as commercial publishers or academic",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Grey literature is a term used to describe a wide range of literature that is not published in a peer-reviewed journal.\nQuestion: What is the",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Grey literature is a term used to describe unpublished or non-peer-reviewed literature. It is often used to describe reports, conference proceedings, and",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "A small fraction of the cold water flow from Lake Constance goes to what other lake?",
+                "sub_context": "A small fraction of the flow is diverted off the island of Mainau into Lake \u00dcberlingen.",
+                "answer": "Lake \u00dcberlingen",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "A small fraction of the cold water flow from Lake Constance goes to Lake \u00dcberlingen.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Lake \u00dcberlingen\nQuestion: What is the name of the island in Lake Constance?\nAnswer: Mainau\nQuestion: What is the name of",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Lake \u00dcberlingen\nQuestion: A small fraction of the cold water flow from Lake Constance goes to what other lake?\n",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "Where did the Rhine occupy during the Holocene?",
+                "sub_context": "At the begin of the Holocene (~11,700 years ago), the Rhine occupied its Late-Glacial valley.",
+                "answer": "Late-Glacial valley",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Rhine occupied its Late-Glacial valley during the Holocene.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " The Rhine occupied its Late-Glacial valley.\nQuestion: What is the Holocene?\nAnswer: The Holocene is the current geological",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Rhine occupied its Late-Glacial valley.\nQuestion: What is the Late-Glacial valley?\nAnswer: The",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "The first episode of Doctor Who premiered the day after what famous event in history?",
+                "sub_context": "Premiering the day after the assassination of John F. Kennedy, the first episode of Doctor Who was repeated with the second episode the following week.",
+                "answer": "the assassination of John F. Kennedy",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.\nThe first episode of Doctor Who premiered on November 23",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The assassination of John F. Kennedy\nThe first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.\nThe first episode",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "The merger between ITT and ABC was suspended after a complaint was filed by whom in July 1967?",
+                "sub_context": "The merger was suspended, and a complaint was filed by the Department of Justice in July 1967, with ITT going to trial in October 1967; the merger was officially canceled after the trial's conclusion on January 1, 1968.",
+                "answer": "Department of Justice",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The merger between ITT and ABC was suspended after a complaint was filed by the",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The merger was suspended, and a complaint was filed by the Department of Justice in July 1967.\nThe merger between ITT and ABC was",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The merger between ITT and ABC was suspended after a complaint was filed by the Department of Justice in July 1967, with ITT",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "In a platoon style teaching, what gives the children security?",
+                "sub_context": "Students still derive a strong sense of security by staying with the same group of peers for all classes.",
+                "answer": "staying with the same group of peers for all classes",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "In a platoon style teaching, the children derive security from staying with the same group of",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " The children derive a strong sense of security by staying with the same group of peers for all classes.\nQuestion: What is the context of the given",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The children derive a strong sense of security by staying with the same group of peers for all classes.\nQuestion: What is the best way to",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "What new component was found in certain rocks from the moon?",
+                "sub_context": "A geochemical component called KREEP was discovered, which has no known terrestrial counterpart.",
+                "answer": "KREEP",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "A new component called KREEP (Kenya Rift Valley Earth) was found in certain",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " KREEP\nQuestion: What is KREEP?\nAnswer: KREEP is a geochemical component that has no known terrestrial counterpart.",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " A geochemical component called KREEP was discovered, which has no known terrestrial counterpart.\nQuestion: What is the name of the ge",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "What did Luther add to his catechisms?",
+                "sub_context": "Luther incorporated questions and answers in the catechism so that the basics of Christian faith would not just be learned by rote, \"the way monkeys do it\", but understood.",
+                "answer": "questions and answers",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Luther added questions and answers to his catechisms so that the basics of Christian faith would",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Luther added questions and answers to his catechisms so that the basics of Christian faith would not just be learned by rote, \"the way",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Luther incorporated questions and answers in the catechism so that the basics of Christian faith would not just be learned by rote, \"the way mon",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What is the Rhine called in French?",
+                "sub_context": "The diphthong in modern German Rhein (also adopted in Romansh Rein, Rain) is a Central German development of the early modern period, the Alemannic name R\u012b(n) retaining the older vocalism,[note 4] as does Ripuarian Rhing, while Palatine has diphthongized Rhei, Rhoi.",
+                "answer": "Rhin",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Rhine is called \"Le Rhin\" in French.",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The Rhine is called the Rh\u00f4ne in French.\nQuestion: What is the Rhine called in German?\nAnswer: The Rhine is",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Rhine is called the Rhin in French.\nQuestion: What is the Rhine called in German?\nAnswer: The",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What year was the Treaty of Amsterdam created?",
+                "sub_context": "A toned down version was adopted as the Social Charter at the 1989 Strasbourg European Council.",
+                "answer": "1997",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Treaty of Amsterdam was created in 1997.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " 1997\nQuestion: What is the name of the European Union's social charter?\nAnswer: The Charter of Fundamental Rights of the European",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Treaty of Amsterdam was signed in 1997.\nQuestion: What year was the Treaty of Maastricht created?\n",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "How big were his artificial bolts?",
+                "sub_context": "Light bulbs within 100 feet of the lab glowed even when turned off.",
+                "answer": "135 feet",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "I'm sorry, but the question and context provided do not provide enough information to answer the question",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " 1.5 inches\nQuestion: What was the distance between the light bulbs?\nAnswer: 100 feet\nQuestion: What was the distance",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " They were 100 feet long.\nQuestion: How did the light bulbs glow even when turned off?\nAnswer:",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What organization is the IPCC a part of?",
+                "sub_context": "Membership of the IPCC is open to all members of the WMO and UNEP.",
+                "answer": "the United Nations",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The IPCC (Intergovernmental Panel on Climate Change) is a part of",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The IPCC is a part of the WMO and UNEP.\nQuestion: What is the IPCC?\nAnswer: The IPCC is",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The IPCC is a part of the WMO and UNEP.\nQuestion: What is the IPCC?\nAnswer: The",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What did mlolongo system lead to?",
+                "sub_context": "This was seen as the climax of a very undemocratic regime and it led to widespread agitation for constitutional reform.",
+                "answer": "agitation for constitutional reform",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Mlolongo system led to widespread agitation for constitutional reform.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " It led to widespread agitation for constitutional reform.\nQuestion: What was the climax of the mlolongo system?\nAnswer: The climax of the",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The mlolongo system led to the formation of the first parliament in the history of Kenya.\nQuestion: What was the main reason for the",
+                        "evaluation": 0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "text_splitter": "SentenceSplitter",
+        "embedder": "MiniLM",
+        "measure": "CosineSimilarity",
+        "triplets": [
+            {
+                "question": "What path does a ball thrown up and down in a moving vehicle take when seen by an outside observer? ",
+                "sub_context": "This is true even though another person who is observing the moving vehicle pass by also observes the ball follow a curving parabolic path in the same direction as the motion of the vehicle.",
+                "answer": "parabolic",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "When seen by an outside observer, a ball thrown up and down in a moving vehicle takes a cur",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The ball follows a curving parabolic path in the same direction as the motion of the vehicle.\n\nAnswer: The ball follows a curving",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The ball follows a parabolic path.\n\nA: The ball follows a parabolic path.\nThe ball follows a parabolic path.\n",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "Cypiddids are not what?",
+                "sub_context": "Evidence accumulating since the 1980s indicates that the \"cydippids\" are not monophyletic, in other words do not include all and only the descendants of a single common ancestor, because all the other traditional ctenophore groups are descendants of various cydippids.",
+                "answer": "monophyletic",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Cydippids are not monophyletic, which means that they do not include all",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Monophyletic\nQuestion: What is the evidence that the cydippids are not monophyletic?\nAnswer: The",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " Cypiddids are not monophyletic.\nQuestion: What is the meaning of monophyletic?\nAnsw",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What responsibilities were pharmacy technicians formerly limited to?",
+                "sub_context": "Where it was once the case that pharmacists stayed within the dispensary compounding/dispensing medications, there has been an increasing trend towards the use of trained pharmacy technicians while the pharmacist spends more time communicating with patients.",
+                "answer": "within the dispensary compounding/dispensing medications",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Pharmacy technicians were formerly limited to tasks such as compounding and dispensing medications",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Pharmacy technicians were formerly limited to compounding and dispensing medications.\nQuestion: What is the new trend?\nAnswer: The new trend is that pharmacy",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Pharmacy technicians were formerly limited to dispensing medications.\nQuestion: What responsibilities are pharmacy technicians now limited to?\nAnswer: Pharmacy",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "Where did Kublai build his administration's strength?",
+                "sub_context": "After strengthening his government in northern China, Kublai pursued an expansionist policy in line with the tradition of Mongol and Chinese imperialism.",
+                "answer": "northern China",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Kublai built the strength of his administration in northern China.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Kublai built his administration's strength in the north.\nQuestion: What was the result of Kublai's expansionist policy?",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Kublai built his administration's strength in northern China.\nQuestion: What was the main reason for Kublai's expansionist",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What was the corporate entity American Broadcasting-Paramount Theatres renamed in 1965? ",
+                "sub_context": "In 1965, the corporate entity, American Broadcasting-Paramount Theatres, was renamed as the American Broadcasting Companies, while its cinema division became ABC Theatres;[citation needed] its recording division was renamed ABC Records in 1966.",
+                "answer": "American Broadcasting Companies",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The corporate entity American Broadcasting-Paramount Theatres was renamed as the American Broadcasting",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " ABC Theatres\nQuestion: What was the corporate entity American Broadcasting-Paramount Theatres renamed in 1965? \nAnswer:",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " American Broadcasting Companies\n\nA: The correct answer is American Broadcasting Companies.\nThe correct answer is American Broadcasting Companies.\nThe correct answer is American",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "When were the French wars of religion?",
+                "sub_context": "The French Wars of Religion in the 16th century and French Revolution in the 18th successively destroyed much of what existed in the way of the architectural and artistic remnant of this Norman creativity.",
+                "answer": "16th century",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The French Wars of Religion were a series of conflicts that took place in France between the Protestant H",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The French Wars of Religion were a series of religious wars fought in France between the Catholic League and the Huguenots from 1562 to 159",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The French wars of religion were a series of conflicts in 16th century France between Roman Catholics and Protestants.\nQuestion: What was",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "When was the agreement to acquire ABC approved by UPT's board?",
+                "sub_context": "On June 6, 1951, the tentative agreement was approved by UPT's board of directors.",
+                "answer": "June 6, 1951",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The agreement to acquire ABC was approved by UPT's board of directors on June",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The tentative agreement was approved by UPT's board of directors on June 6, 1951.\nQuestion: When was the agreement to",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " On June 6, 1951, the tentative agreement was approved by UPT's board of directors.\nQuestion:",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What is 'grey literature'?",
+                "sub_context": "Authors may refer to non-peer-reviewed sources (the \"grey literature\"), provided that they are of sufficient quality.",
+                "answer": "non-peer-reviewed sources",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Grey literature refers to documents or sources that are not published through traditional publishing channels, such as academic journ",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Grey literature is a term used to describe a wide range of materials that are not published in peer-reviewed journals.\nQuestion: What is the difference",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Grey literature is a term used to describe unpublished or non-peer-reviewed literature.\nQuestion: What is the difference between grey literature and",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "A small fraction of the cold water flow from Lake Constance goes to what other lake?",
+                "sub_context": "The cold water flows near the surface and at first doesn't mix with the warmer, green waters of Upper Lake.",
+                "answer": "Lake \u00dcberlingen",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "A small fraction of the cold water flow from Lake Constance goes to Lake Zurich.",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The small fraction of the cold water flow from Lake Constance goes to the Black Sea.\nQuestion: What is the name of the river that flows into",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The cold water flows near the surface and at first doesn't mix with the warmer, green waters of Upper Lake.\nQuestion: What is",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "Where did the Rhine occupy during the Holocene?",
+                "sub_context": "At the begin of the Holocene (~11,700 years ago), the Rhine occupied its Late-Glacial valley.",
+                "answer": "Late-Glacial valley",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Rhine occupied its Late-Glacial valley during the Holocene.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " The Rhine occupied its Late-Glacial valley.\nQuestion: What is the Holocene?\nAnswer: The Holocene is the current geological",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Rhine occupied its Late-Glacial valley.\nQuestion: What is the Late-Glacial valley?\nAnswer: The",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "The first episode of Doctor Who premiered the day after what famous event in history?",
+                "sub_context": "Premiering the day after the assassination of John F. Kennedy, the first episode of Doctor Who was repeated with the second episode the following week.",
+                "answer": "the assassination of John F. Kennedy",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.\nThe first episode of Doctor Who premiered on November 23",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The assassination of John F. Kennedy\nThe first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.\nThe first episode",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "The merger between ITT and ABC was suspended after a complaint was filed by whom in July 1967?",
+                "sub_context": "The merger was suspended, and a complaint was filed by the Department of Justice in July 1967, with ITT going to trial in October 1967; the merger was officially canceled after the trial's conclusion on January 1, 1968.",
+                "answer": "Department of Justice",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The merger between ITT and ABC was suspended after a complaint was filed by the",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The merger was suspended, and a complaint was filed by the Department of Justice in July 1967.\nThe merger between ITT and ABC was",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The merger between ITT and ABC was suspended after a complaint was filed by the Department of Justice in July 1967, with ITT",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "In a platoon style teaching, what gives the children security?",
+                "sub_context": "One of these, sometimes referred to as a \"platoon\" system, involves placing a group of students together in one class that moves from one specialist to another for every subject.",
+                "answer": "staying with the same group of peers for all classes",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "In a platoon style teaching, the security for children comes from the fact that they are placed",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The children feel secure because they are with their friends.\nQuestion: What is the advantage of a platoon style teaching?\nAnswer: The advantage of",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The teacher is the same for all subjects.\nQuestion: What is the advantage of a platoon system?\nAnswer: The children",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What new component was found in certain rocks from the moon?",
+                "sub_context": "One important rock found during the Apollo Program is dubbed the Genesis Rock, retrieved by astronauts David Scott and James Irwin during the Apollo 15 mission.",
+                "answer": "KREEP",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Genesis Rock, which was retrieved by astronauts David Scott and James Irwin during the",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The moon rocks brought back by Apollo 15 contained a new component that had never been found on Earth.\nThe answer is (D)\n",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Genesis Rock was found to contain a new component that was not found in rocks on Earth.\nQuestion: What was the Genesis Rock found to",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What did Luther add to his catechisms?",
+                "sub_context": "Luther devised the catechism as a method of imparting the basics of Christianity to the congregations.",
+                "answer": "questions and answers",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Luther added a number of innovations to his catechisms, including a focus on the importance",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Luther added the Lord\u2019s Prayer and the Ten Commandments to his catechisms.\nQuestion: What did Luther do to make the catech",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Luther added the Ten Commandments to his catechisms.\nQuestion: What did Luther add to his catechisms?\nAnswer",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What is the Rhine called in French?",
+                "sub_context": "The variant forms of the name of the Rhine in modern languages are all derived from the Gaulish name R\u0113nos, which was adapted in Roman-era geography (1st century BC) as Greek \u1fec\u1fc6\u03bd\u03bf\u03c2 (Rh\u0113nos), Latin Rhenus.[note 3] The spelling with Rh- in English Rhine as well as in German Rhein and French Rhin is due to the influence of Greek orthography, while the vocalisation -i- is due to the Proto-Germanic adoption of the Gaulish name as *R\u012bnaz, via Old Frankish giving Old English R\u00edn, Old High German R\u012bn, Dutch Rijn (formerly also spelled Rhijn)).",
+                "answer": "Rhin",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Rhine is called \"Rhin\" in French.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " The Rhine is called the Rh\u00f4ne in French.\nQuestion: What is the Rhine called in German?\nAnswer: The Rhine is",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Rhine is called the Rhin in French.\nQuestion: What is the Rhine called in German?\nAnswer: The",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What year was the Treaty of Amsterdam created?",
+                "sub_context": "The Social Chapter is a chapter of the 1997 Treaty of Amsterdam covering social policy issues in European Union law.",
+                "answer": "1997",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Treaty of Amsterdam was created in 1997.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " 1997\nQuestion: What is the name of the Treaty of Amsterdam?\nAnswer: Treaty of Amsterdam\nQuestion: What is the name of",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The Treaty of Amsterdam was created in 1997.\nQuestion: What was the purpose of the Treaty of Amsterdam?\nAnsw",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "How big were his artificial bolts?",
+                "sub_context": "He produced artificial lightning, with discharges consisting of millions of volts and up to 135 feet long.",
+                "answer": "135 feet",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The artificial bolts produced by the person in the context were described as consisting of millions of volts",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " His artificial bolts were up to 135 feet long.\nQuestion: What was the name of the man who produced artificial lightning?\nAnswer: He",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " He produced artificial lightning, with discharges consisting of millions of volts and up to 135 feet long.\nAnswer:",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "What organization is the IPCC a part of?",
+                "sub_context": "The Intergovernmental Panel on Climate Change (IPCC) is a scientific intergovernmental body under the auspices of the United Nations, set up at the request of member governments.",
+                "answer": "the United Nations",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Intergovernmental Panel on Climate Change (IPCC) is a part of",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The IPCC is a part of the United Nations.\nQuestion: What is the IPCC\u2019s main purpose?\nAnswer: The IPCC",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Intergovernmental Panel on Climate Change (IPCC) is a scientific intergovernmental body under the auspices of the United Nations, set up at",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What did mlolongo system lead to?",
+                "sub_context": "The election held in 1988 saw the advent of the mlolongo (queuing) system, where voters were supposed to line up behind their favoured candidates instead of a secret ballot.",
+                "answer": "agitation for constitutional reform",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The mlolongo (queuing) system led to the public display of political affiliations and",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The election held in 1988 saw the advent of the mlolongo (queuing) system, where voters were supposed to line up behind",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " It led to the emergence of a new political party, the National Democratic Party (NDP).\nQuestion: What was the main reason for the",
+                        "evaluation": 0
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "text_splitter": "SentenceSplitter",
+        "embedder": "E5",
+        "measure": "CosineSimilarity",
+        "triplets": [
+            {
+                "question": "What path does a ball thrown up and down in a moving vehicle take when seen by an outside observer? ",
+                "sub_context": "This is true even though another person who is observing the moving vehicle pass by also observes the ball follow a curving parabolic path in the same direction as the motion of the vehicle.",
+                "answer": "parabolic",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "When seen by an outside observer, a ball thrown up and down in a moving vehicle takes a cur",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The ball follows a curving parabolic path in the same direction as the motion of the vehicle.\n\nAnswer: The ball follows a curving",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The ball follows a parabolic path.\n\nA: The ball follows a parabolic path.\nThe ball follows a parabolic path.\n",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "Cypiddids are not what?",
+                "sub_context": "Evidence accumulating since the 1980s indicates that the \"cydippids\" are not monophyletic, in other words do not include all and only the descendants of a single common ancestor, because all the other traditional ctenophore groups are descendants of various cydippids.",
+                "answer": "monophyletic",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Cydippids are not monophyletic, which means that they do not include all",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Monophyletic\nQuestion: What is the evidence that the cydippids are not monophyletic?\nAnswer: The",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " Cypiddids are not monophyletic.\nQuestion: What is the meaning of monophyletic?\nAnsw",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What responsibilities were pharmacy technicians formerly limited to?",
+                "sub_context": "Pharmacy technicians are now more dependent upon automation to assist them in their new role dealing with patients' prescriptions and patient safety issues.",
+                "answer": "within the dispensary compounding/dispensing medications",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Pharmacy technicians were formerly limited to tasks such as filling prescriptions, preparing medic",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Pharmacy technicians were formerly limited to counting pills and filling prescriptions.\nAnswer: Pharmacy technicians are now more dependent upon automation to assist them in their new role",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Pharmacy technicians were formerly limited to the tasks of filling prescriptions, counting pills, and labeling bottles.\nQuestion: What are the new responsibilities",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "Where did Kublai build his administration's strength?",
+                "sub_context": "After strengthening his government in northern China, Kublai pursued an expansionist policy in line with the tradition of Mongol and Chinese imperialism.",
+                "answer": "northern China",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Kublai built the strength of his administration in northern China.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Kublai built his administration's strength in the north.\nQuestion: What was the result of Kublai's expansionist policy?",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Kublai built his administration's strength in northern China.\nQuestion: What was the main reason for Kublai's expansionist",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What was the corporate entity American Broadcasting-Paramount Theatres renamed in 1965? ",
+                "sub_context": "In 1965, the corporate entity, American Broadcasting-Paramount Theatres, was renamed as the American Broadcasting Companies, while its cinema division became ABC Theatres;[citation needed] its recording division was renamed ABC Records in 1966.",
+                "answer": "American Broadcasting Companies",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The corporate entity American Broadcasting-Paramount Theatres was renamed as the American Broadcasting",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " ABC Theatres\nQuestion: What was the cinema division of ABC Theatres renamed in 1966? \nAnswer: ABC Records\n",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " American Broadcasting Companies\n\nA: The correct answer is American Broadcasting Companies.\nThe correct answer is American Broadcasting Companies.\nThe correct answer is American",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "When were the French wars of religion?",
+                "sub_context": "The French Wars of Religion in the 16th century and French Revolution in the 18th successively destroyed much of what existed in the way of the architectural and artistic remnant of this Norman creativity.",
+                "answer": "16th century",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The French Wars of Religion were a series of conflicts that took place in France between the Protestant H",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The French Wars of Religion were a series of religious wars fought in France between the Catholic League and the Huguenots from 1562 to 159",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The French wars of religion were a series of conflicts in 16th century France between Roman Catholics and Protestants.\nQuestion: What was",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "When was the agreement to acquire ABC approved by UPT's board?",
+                "sub_context": "Goldenson and Noble reached a tentative agreement in the late spring of 1951 in which UPT would acquire ABC and turn it into a subsidiary of the company that would retain autonomy in its management.",
+                "answer": "June 6, 1951",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The agreement to acquire ABC was approved by UPT's board in the late spring of",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The agreement to acquire ABC was approved by UPT's board in the late spring of 1951.\nQuestion: What was the name of",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The agreement to acquire ABC was approved by UPT's board in the late spring of 1951.\nQuestion: What was",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What is 'grey literature'?",
+                "sub_context": "Authors may refer to non-peer-reviewed sources (the \"grey literature\"), provided that they are of sufficient quality.",
+                "answer": "non-peer-reviewed sources",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Grey literature refers to documents or sources that are not published through traditional publishing channels, such as academic journ",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " Grey literature is a term used to describe a wide range of materials that are not peer-reviewed.\nQuestion: What is the difference between peer-",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " Grey literature is a term used to describe unpublished or non-peer-reviewed literature.\nQuestion: What is the difference between grey literature and",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "A small fraction of the cold water flow from Lake Constance goes to what other lake?",
+                "sub_context": "Most of the water flows via the Constance hopper into the Rheinrinne (\"Rhine Gutter\") and Seerhein.",
+                "answer": "Lake \u00dcberlingen",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "A small fraction of the cold water flow from Lake Constance goes to Lake Zurich.",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Lake Constance flows into the Rhine.\nQuestion: What is the name of the river that flows into the Rhine?\nAnswer: The Rh",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The cold water flow from Lake Constance goes to the Lake of Zurich.\nQuestion: What is the name of the lake that is located",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "Where did the Rhine occupy during the Holocene?",
+                "sub_context": "At the begin of the Holocene (~11,700 years ago), the Rhine occupied its Late-Glacial valley.",
+                "answer": "Late-Glacial valley",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Rhine occupied its Late-Glacial valley during the Holocene.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " The Rhine occupied its Late-Glacial valley.\nQuestion: What is the Holocene?\nAnswer: The Holocene is the current geological",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Rhine occupied its Late-Glacial valley.\nQuestion: What is the Late-Glacial valley?\nAnswer: The",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "The first episode of Doctor Who premiered the day after what famous event in history?",
+                "sub_context": "Premiering the day after the assassination of John F. Kennedy, the first episode of Doctor Who was repeated with the second episode the following week.",
+                "answer": "the assassination of John F. Kennedy",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.\nThe first episode of Doctor Who premiered on November 23",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The assassination of John F. Kennedy\nThe first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.\nThe first episode",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "The merger between ITT and ABC was suspended after a complaint was filed by whom in July 1967?",
+                "sub_context": "The merger was suspended, and a complaint was filed by the Department of Justice in July 1967, with ITT going to trial in October 1967; the merger was officially canceled after the trial's conclusion on January 1, 1968.",
+                "answer": "Department of Justice",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The merger between ITT and ABC was suspended after a complaint was filed by the",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The merger was suspended, and a complaint was filed by the Department of Justice in July 1967.\nThe merger between ITT and ABC was",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The merger between ITT and ABC was suspended after a complaint was filed by the Department of Justice in July 1967, with ITT",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "In a platoon style teaching, what gives the children security?",
+                "sub_context": "One of these, sometimes referred to as a \"platoon\" system, involves placing a group of students together in one class that moves from one specialist to another for every subject.",
+                "answer": "staying with the same group of peers for all classes",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "In a platoon style teaching, the security for children comes from the fact that they are placed",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The children feel secure because they are with their friends.\nQuestion: What is the advantage of a platoon style teaching?\nAnswer: The advantage of",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The teacher is the same for all subjects.\nQuestion: What is the advantage of a platoon system?\nAnswer: The children",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What new component was found in certain rocks from the moon?",
+                "sub_context": "One important rock found during the Apollo Program is dubbed the Genesis Rock, retrieved by astronauts David Scott and James Irwin during the Apollo 15 mission.",
+                "answer": "KREEP",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Genesis Rock, which was retrieved by astronauts David Scott and James Irwin during the",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The moon rocks brought back by Apollo 15 contained a new component that had never been found on Earth.\nThe answer is (D)\n",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Genesis Rock was found to contain a new component that was not found in rocks on Earth.\nQuestion: What was the Genesis Rock found to",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What did Luther add to his catechisms?",
+                "sub_context": "Luther incorporated questions and answers in the catechism so that the basics of Christian faith would not just be learned by rote, \"the way monkeys do it\", but understood.",
+                "answer": "questions and answers",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "Luther added questions and answers to his catechisms so that the basics of Christian faith would",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " Luther added questions and answers to his catechisms so that the basics of Christian faith would not just be learned by rote, \"the way",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " Luther incorporated questions and answers in the catechism so that the basics of Christian faith would not just be learned by rote, \"the way mon",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What is the Rhine called in French?",
+                "sub_context": "The variant forms of the name of the Rhine in modern languages are all derived from the Gaulish name R\u0113nos, which was adapted in Roman-era geography (1st century BC) as Greek \u1fec\u1fc6\u03bd\u03bf\u03c2 (Rh\u0113nos), Latin Rhenus.[note 3] The spelling with Rh- in English Rhine as well as in German Rhein and French Rhin is due to the influence of Greek orthography, while the vocalisation -i- is due to the Proto-Germanic adoption of the Gaulish name as *R\u012bnaz, via Old Frankish giving Old English R\u00edn, Old High German R\u012bn, Dutch Rijn (formerly also spelled Rhijn)).",
+                "answer": "Rhin",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Rhine is called \"Rhin\" in French.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " The Rhine is called the Rh\u00f4ne in French.\nQuestion: What is the Rhine called in German?\nAnswer: The Rhine is",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Rhine is called the Rhin in French.\nQuestion: What is the Rhine called in German?\nAnswer: The",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What year was the Treaty of Amsterdam created?",
+                "sub_context": "The Social Chapter is a chapter of the 1997 Treaty of Amsterdam covering social policy issues in European Union law.",
+                "answer": "1997",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Treaty of Amsterdam was created in 1997.",
+                        "evaluation": 1
+                    },
+                    "Falcon": {
+                        "answer": " 1997\nQuestion: What is the name of the Treaty of Amsterdam?\nAnswer: Treaty of Amsterdam\nQuestion: What is the name of",
+                        "evaluation": 1
+                    },
+                    "Llama": {
+                        "answer": " The Treaty of Amsterdam was created in 1997.\nQuestion: What was the purpose of the Treaty of Amsterdam?\nAnsw",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "How big were his artificial bolts?",
+                "sub_context": "He produced artificial lightning, with discharges consisting of millions of volts and up to 135 feet long.",
+                "answer": "135 feet",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The artificial bolts produced by the person in the context were described as consisting of millions of volts",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " His artificial bolts were up to 135 feet long.\nQuestion: What was the name of the man who produced artificial lightning?\nAnswer: He",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " He produced artificial lightning, with discharges consisting of millions of volts and up to 135 feet long.\nAnswer:",
+                        "evaluation": 1
+                    }
+                }
+            },
+            {
+                "question": "What organization is the IPCC a part of?",
+                "sub_context": "The Intergovernmental Panel on Climate Change (IPCC) is a scientific intergovernmental body under the auspices of the United Nations, set up at the request of member governments.",
+                "answer": "the United Nations",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The Intergovernmental Panel on Climate Change (IPCC) is a part of",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The IPCC is a part of the United Nations.\nQuestion: What is the IPCC\u2019s main purpose?\nAnswer: The IPCC",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " The Intergovernmental Panel on Climate Change (IPCC) is a scientific intergovernmental body under the auspices of the United Nations, set up at",
+                        "evaluation": 0
+                    }
+                }
+            },
+            {
+                "question": "What did mlolongo system lead to?",
+                "sub_context": "The election held in 1988 saw the advent of the mlolongo (queuing) system, where voters were supposed to line up behind their favoured candidates instead of a secret ballot.",
+                "answer": "agitation for constitutional reform",
+                "predictions": {
+                    "Vicuna": {
+                        "answer": "The mlolongo (queuing) system led to the public display of political affiliations and",
+                        "evaluation": 0
+                    },
+                    "Falcon": {
+                        "answer": " The election held in 1988 saw the advent of the mlolongo (queuing) system, where voters were supposed to line up behind",
+                        "evaluation": 0
+                    },
+                    "Llama": {
+                        "answer": " It led to the emergence of a new political party, the National Democratic Party (NDP).\nQuestion: What was the main reason for the",
+                        "evaluation": 0
+                    }
+                }
+            }
+        ]
+    }
+]

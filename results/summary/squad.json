@@ -1,0 +1,20 @@
+[
+    {
+        "embedder": "Bert",
+        "Vicuna": 0.4,
+        "Falcon": 0.25,
+        "Llama": 0.35
+    },
+    {
+        "embedder": "MiniLM",
+        "Vicuna": 0.35,
+        "Falcon": 0.25,
+        "Llama": 0.3
+    },
+    {
+        "embedder": "E5",
+        "Vicuna": 0.35,
+        "Falcon": 0.25,
+        "Llama": 0.3
+    }
+]
