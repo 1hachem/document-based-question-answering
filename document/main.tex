@@ -13,6 +13,7 @@
 \usepackage{xcolor}
 \usepackage[acronym]{glossaries}
 \usepackage{multirow}
+\usepackage{authblk}
 
 \makeglossaries
 
@@ -29,20 +30,29 @@
 \newacronym{ir}{IR}{Information retrieval}
 \newacronym{abc}{ABC}{Asset-based consulting}
 
-\author{Hachem Betrouni}
+\author[1,2]{Hachem Betrouni}
+\affil[1]{National Polytechnic school of Algiers, Industrial Engineering Department, Data Science and AI, Algiers, hachem.betrouni@g.enp.edu.dz}
+\affil[2]{BIGmama technology, France, hb@big-mama.io}
+
 \title{Document-based question answering}
 
 \begin{document}
 \maketitle
-
+\begin{abstract}
+In this thesis, we present a comprehensive analysis of various open-source embedding models and large language models (LLMs) for document-based question answering (DBQA). The goal of DBQA is to extract relevant information from a given document and answer user queries in natural language. We evaluate the performance of different embedding models, including BERT, E5, and MiniLM, in combination with open source LLMs such as Vicuna, Falcon, and OpenLlama.
+Our experimental setup involves a retriever-generator framework, where a retrieval system retrieves the most relevant contexts from a document using embedding models. The conditioned generative system then generates a response to the user query based on the retrieved contexts using LLMs. We benchmark the performance of these systems using the SQuAD dataset.
+We find that the choice of embedding model significantly impacts the retrieval performance. Moreover, we observe that the choice of LLM also plays a crucial role in generating accurate and informative answers.unsrt
+This comparative analysis provides insights into the strengths and weaknesses of various open-source embedding models and LLMs for DBQA tasks. The findings of this study can guide researchers and practitioners in selecting suitable models for their specific DBQA applications and contribute to the advancement of question-answering systems.
+\end{abstract}
 \clearpage
 \begin{center}
     \thispagestyle{empty}
     \vspace*{\fill}
     To my parents,\\
-    to my family, friends, enemies, and every person who shaped who I am, \\
+    to my family, mentors, friends, enemies, and every person who shaped who I am, \\
     to every rock that broke my bones, to every sea waving on the shores, \\  
     to Algiers's seagulls waking me up morning, reminded of Allah's boons,\\
+    to Collo's men who rescued me,\\
     to you all I dedicate not this thesis but the years that led to its maketh.\\
     \vspace*{\fill}
 \end{center}
@@ -179,6 +189,7 @@ In this project we experimented with different DBQA systems, we prepared a small
 
 \clearpage
 \section{State of the art}
+
 \subsection{Introduction}
 
 \subsubsection{NLP Tasks}
@@ -326,6 +337,27 @@ Huggingface recently published an LLM leaderboard \cite{open-llm-leaderboard}, w
     \item TruthfulQA (0-shot) - a benchmark to measure whether a language model is truthful in generating answers to questions \cite{truthfulqa}.
 \end{enumerate}
 
+Most of the top performing models in this benchmark are either fine-tuned Falcon \cite{falcon} or fine-tuned LLama \cite{llama}.
+
+\paragraph*{Falcon}
+Large language models are typically trained using a combination of carefully selected high-quality data sources and filtered web data. 
+The curation process aims to create models that perform well across a wide range of tasks. 
+However, as the size of models increases and more training data is required, concerns arise regarding the scalability of the curation process and the availability of unique high-quality data.
+
+The refined web dataset for Falcon llm \cite{falcondataset} demonstrates that properly filtered and deduplicated web data alone can yield powerful language models, 
+even outperform state-of-the-art models trained on curated datasets like The Pile \cite{pile}. 
+The authors of this dataset\cite{falcondataset} have released the Falcon \cite{falcon} language models with 1.3/7.5 billion parameters trained on this dataset, 
+which serve as valuable resources for this project.
+
+\paragraph*{LLaMa}
+The authors of \cite{llama} present LLaMA, a collection of foundation language models with parameters ranging from 7 billion to 65 billion. 
+They demonstrate that it is possible to train state-of-the-art models using publicly available datasets alone, without relying on proprietary or inaccessible data. 
+In particular, LLaMA-13B surpasses the performance of GPT-3 (175B) \cite{gpt3} on most benchmarks, and LLaMA-65B is on par with other top models like Chinchilla-70B \cite{chinchilla} and PaLM-540B \cite{palm}. 
+By making open-sourcing the LLaMA architecture and training code and by making the weights available for researchers, plenty of other models appeared as a result of fine-tuning the original LLaMA models on various tasks and datasets, 
+these fine-tuned models include Alpaca \cite{alpaca} and Vicuna \cite{vicuna}. 
+
+OpenLLaMa \cite{openllama} provides a totally open-source replication (weights and code, no research-only restriction) of the original LLaMA \cite{llama} models and which surprisingly in some cases outperforms the original models according to their benchmark \cite{openllama}     
+
 \subsection{Question answering}
 \subsubsection{Visual QA}
 \subsubsection{Open-domain QA}
@@ -447,7 +479,8 @@ The systems that we experimented with follows the retriever-generator framework,
 In table \ref{tab:benchmark} we show that we tested all the possible combination of the different embedding models and LMs at hand.
 
 \subsection{Evaluation}
-We bench-marked the different systems mentioned in table \ref{tab:benchmark} on the SQuAD dataset \cite{squad}.
+We bench-marked the different systems on the SQuAD dataset \cite{squad}. We sampled 20 with there context and answer (examples can be found in this annex \ref*{ann:experiments}), for each question and context 
+we tested a different embedding and LLM, each response is them evaluated using GPT-3 \cite{gpt3} (a score of +1 is given if the answer is correct 0 otherwise), results are shown in table \ref{tab:benchmark}.
 
 \begin{table}
     \centering
@@ -460,7 +493,7 @@ We bench-marked the different systems mentioned in table \ref{tab:benchmark} on 
         MiniLM & 0.35 & 0.25 & 0.3  \\
         E5     & 0.35 & 0.25 & 0.3  \\
     \end{tabular}
-    \caption{Benchmark : score of each system when tested on 20 samples from SQuAD \cite{squad} dataset, and evaluated using gpt-3 \cite{gpt3}.}
+    \caption{Benchmark : score of each system when tested on 20 samples from SQuAD \cite{squad} dataset, and evaluated using GPT-3 \cite{gpt3}.}
     \label{tab:benchmark}
 \end{table}
 
@@ -479,5 +512,5 @@ We bench-marked the different systems mentioned in table \ref{tab:benchmark} on 
 \onecolumn
 \section{Annexes}
 \subsection{Code}
-\subsection{Experiments}
+\subsection{Experiments}\label{ann:experiments}
 \end{document}
