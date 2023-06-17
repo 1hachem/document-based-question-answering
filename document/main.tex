@@ -15,6 +15,31 @@
 \usepackage{multirow}
 \usepackage{authblk}
 
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{mystyle}{ 
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
 \makeglossaries
 
 \newacronym{nlp}{NLP}{Natural Language Processing}
@@ -460,8 +485,36 @@ Here we only discuss approaches for machine comprehension using neural networks 
 \clearpage
 \section{Implementation and results}
 \subsection{Introduction}
-LlamaIndex \cite{Liu_LlamaIndex_2022} bench-marked different indexing methods (different embeddings, LLMs and retrieval systems) following a similar approach to ours. However their focus was on OPENAI proprietary language models (GPT-3 and GPT-4) \cite{gpt3, gpt4}.
-Our focus on the other hand was on using open-source embedding models and LLMs that can fully arun on-premise.
+In our Implementation we chose a retriever-generator approach, we experimented with different combinations of embedding and Language models, as well as different similarity measures and text splitting strategies.
+
+We evaluated the different systems using a sample from the SQuAD \cite{squad} dataset and GPT-3 \cite{gpt3} as a scoring model, more about that in the sections below.  
+
+LlamaIndex \cite{llamaindex} tested out few indexing methods (embeddings, LLMs and retrieval systems) following a similar framework to ours. 
+However their focus was on OpenAI proprietary language models (GPT-3 and GPT-4) \cite{gpt3, gpt4}. Our focus in this project 
+on the other hand is on using open-source embedding models and LLMs that can fully run on-premise, since model and data sovereignty are a critical aspect for our use-case.
+
+In the following sections we will provide more details on our implementation as well as the evaluation results we got.
+
+\subsection{challenges}
+The following challenges arise when using LLMs for DBQA : 
+\begin{enumerate}
+  \item Small context window: LLMs typically have a limited context window, which means they can only consider a fixed number of preceding and succeeding tokens when generating a response. In DBQA, where the answer may depend on information scattered throughout a document, this limited context window can make it difficult for LLMs to capture the necessary context and provide accurate answers. Relevant information may fall outside the context window, leading to incomplete or incorrect responses.
+  \item Hallucination: LLMs can sometimes generate responses that are plausible-sounding but factually incorrect. This phenomenon, known as hallucination, can be a significant issue in DBQA. Since LLMs rely on statistical patterns and language modeling rather than true understanding, they may generate answers that sound reasonable but are not grounded in the actual content of the document. Hallucination can mislead users and compromise the reliability of the DBQA system.
+  \item Storing the models and computational demand for inference: LLMs, especially large-scale models, require substantial computational resources for both training and inference. Storing these models and performing inference can be challenging due to their size and computational demands. DBQA systems that utilize LLMs need to address issues such as efficient model storage, quick retrieval of relevant models, and the computational infrastructure required to perform real-time inference on large documents. These demands can pose practical challenges for deploying LLM-based DBQA systems at scale.
+\end{enumerate}
+
+We were able to workaround the first challenge using IR system based on neural-embedding. 
+For the second challenge we tried using small temperature (a hyperparameter used to control the randomness of the generated text) and presence penalty values (high presence penalty values results in the model being more likely to 
+generate tokens that have not yet been included in the generated text and vice-versa).
+Using smaller models (7B parameters each) (required around 36GB of memory) and allowed us to run the inferences on a multi-GPU machine.
+
+\subsection{Description}
+The systems that we experimented with follows the retriever-generator framework which consists mainly of two parts : 
+
+\paragraph{a retrieval system} that takes as input a document (text) and a query from the user, it splits the document into sentences using a heuristic algorithm developed for the processing the Parallel Corpus for Statistical Machine Translation \cite{europarl}. Each sentence from the document along the query of the user are going to be embedded by one of the chosen embedding models. We measure the one-to-one similarity (using cosine similarity) between the query embedding and each sentence embedding and we retrieve the top $K$ sentences to be used a context.
+
+\paragraph{a conditioned generative system} it takes as input the retrieved contexts and the query to construct a prompt that condition the generation using one of the chosen open-source LLMs.
+In table \ref{tab:benchmark} we show that we tested all the possible combination of the different embedding models and LMs at hand.
 
 \begin{figure}[htbp]
 \centering
@@ -470,17 +523,17 @@ Our focus on the other hand was on using open-source embedding models and LLMs t
 \label{fig:overview}
 \end{figure}
 
-\subsection{Description}
-The systems that we experimented with follows the retriever-generator framework, consists mainly of two parts : 
-
-\paragraph{a retrieval system} that takes as input a document (text) and a query from the user, it splits the document into sentences using a heuristic algorithm developed for the processing the Parallel Corpus for Statistical Machine Translation \cite{europarl}. Each sentence from the document along the query of the user are going to be embedded by one of the chosen embedding models. We measure the one-to-one similarity (using cosine similarity) between the query embedding and each sentence embedding and we retrieve the top $K$ sentences to be used a context.
-
-\paragraph{a conditioned generative system} it takes as input the retrieved contexts and the query to construct a prompt that condition the generation using one of the chosen open-source LLMs.
-In table \ref{tab:benchmark} we show that we tested all the possible combination of the different embedding models and LMs at hand.
-
 \subsection{Evaluation}
 We bench-marked the different systems on the SQuAD dataset \cite{squad}. We sampled 20 with there context and answer (examples can be found in this annex \ref*{ann:experiments}), for each question and context 
 we tested a different embedding and LLM, each response is them evaluated using GPT-3 \cite{gpt3} (a score of +1 is given if the answer is correct 0 otherwise), results are shown in table \ref{tab:benchmark}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.9\linewidth]{figures/evaluation.png}
+  \caption{Evaluation schema with GPT-3 \cite{gpt3}.}
+  \label{fig:evaluation}
+\end{figure}
+
 
 \begin{table}
     \centering
@@ -498,19 +551,423 @@ we tested a different embedding and LLM, each response is them evaluated using G
 \end{table}
 
 \subsection{Implementation details}
+- general details python, git repos, machine specs.
 
-\section{Conclusion and perspectives}
+\begin{enumerate}
+  \item python version : 3.10.11
+  \item system : Ubuntu 20.04.6 LTS x86\_64
+  \item GPU : 1x NVIDIA GeForce GTX 1080 Ti and 2x NVIDIA GeForce RTX 3060
+  \item RAM : 126GB
+\end{enumerate}
 
+\paragraph*{IR system}
+- splitting.
+- embedding.
+\paragraph*{Language models}
+- LMs (batching).
+\paragraph*{Evaluation}
+- evaluation (sampling from dataset) (how to use gpt-3 decoding).
+\paragraph*{User interface}
+- backend 
+- frontend
 
-\clearpage
 % % Bibliography
 \twocolumn
 \bibliographystyle{plain}
-\bibliography{references}
+\bibliography{sample_references}
 \clearpage
+
+
+
+
+
+
+
+
+
+% //////////////////////////////////////////////////////////////////////////////
+% //////////////// Annexes /////////////////////////////////////////////////////
+% //////////////////////////////////////////////////////////////////////////////
 
 \onecolumn
 \section{Annexes}
+
 \subsection{Code}
+\subsubsection*{Initializing the different LMs}
+\begin{lstlisting}[language=Python]
+from abc import ABC, abstractmethod
+
+import gc
+
+import torch
+import transformers
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    LlamaForCausalLM,
+    LlamaTokenizer
+)
+
+
+class LM(ABC):
+    @abstractmethod
+    def __call__(self, requests: list[str], **kwargs: any) -> list[str]:
+        pass
+
+
+class Llama(LM):
+    def __init__(self, model_path: str = "models/openllama/7B") -> None:
+        super().__init__()
+        self.model_path = model_path
+        self.tokenizer = LlamaTokenizer.from_pretrained(model_path)
+        self.model = LlamaForCausalLM.from_pretrained(
+            model_path,
+            torch_dtype=torch.float16,
+            device_map="auto",
+        )
+
+    def __call__(self, requests: list[str]) -> list[str]:
+        outputs = []
+        for prompt in requests:
+            input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
+            generation_output = self.model.generate(
+                input_ids=input_ids,
+                max_new_tokens=30,
+                temperature=0.0,
+            )
+            output = self.tokenizer.decode(
+                generation_output[0], skip_special_tokens=True
+            )
+            output = output.replace(prompt, "")  # eq : return_full_sequence=False
+            outputs.append(output)
+            print(output)
+        return outputs
+
+
+class Falcon(LM):
+    def __init__(self, model_path: str = "models/falcon/7B/snapshots/falcon") -> None:
+        super().__init__()
+        gc.collect()
+        torch.cuda.empty_cache()
+        self.model_name = model_path
+
+    def __call__(self, requests: list[str]) -> list[str]:
+        tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        pipeline_ = transformers.pipeline(
+            "text-generation",
+            model=self.model_name,
+            tokenizer=tokenizer,
+            torch_dtype=torch.bfloat16,
+            trust_remote_code=True,
+            device_map="auto",
+        )
+        sequences = pipeline_(
+            requests,
+            max_new_tokens=30,
+            do_sample=True,
+            top_k=10,
+            temperature=3e-4,
+            num_return_sequences=1,
+            eos_token_id=tokenizer.eos_token_id,
+            return_full_text=False,
+        )
+        outputs = [seq[0]["generated_text"] for seq in sequences]
+        return outputs
+
+
+# Vicuna.py
+import torch
+from fastchat.model.chatglm_model import chatglm_generate_stream
+from fastchat.model.model_adapter import get_conversation_template, load_model
+from fastchat.serve.inference import generate_stream
+
+from src.lm import LM
+
+
+class SimpleChatIO:
+    """this is a workaround to use fastchat for batched inference"""
+
+    def __init__(self, requests: list[str]) -> None:
+        self.requests = requests
+
+    def prompt_for_input(self) -> str:
+        return self.requests.pop(0) if self.requests else ""
+
+    def stream_output(self, output_stream):
+        pre = 0
+        for outputs in output_stream:
+            output_text = outputs["text"]
+            output_text = output_text.strip().split(" ")
+            now = len(output_text) - 1
+            if now > pre:
+                print(" ".join(output_text[pre:now]), end=" ", flush=True)
+                pre = now
+        print(" ".join(output_text[pre:]), flush=True)
+        return " ".join(output_text)
+
+
+def chat_loop(
+    model_path: str,
+    device: str,
+    num_gpus: int,
+    max_gpu_memory: str,
+    load_8bit: bool,
+    cpu_offloading: bool,
+    temperature: float,
+    repetition_penalty: float,
+    max_new_tokens: int,
+    chatio: SimpleChatIO,
+    debug: bool,
+):
+    # Model
+    model, tokenizer = load_model(
+        model_path, device, num_gpus, max_gpu_memory, load_8bit, cpu_offloading, debug
+    )
+    is_chatglm = "chatglm" in str(type(model)).lower()
+    is_fastchat_t5 = "t5" in str(type(model)).lower()
+
+    # Hardcode T5 repetition penalty to be 1.2
+    if is_fastchat_t5 and repetition_penalty == 1.0:
+        repetition_penalty = 1.2
+
+    while True:
+        conv = get_conversation_template(model_path)  # reset conversation
+
+        try:
+            inp = chatio.prompt_for_input()
+        except EOFError:
+            inp = ""
+        if not inp:
+            print("exit...")
+            break
+
+        conv.append_message(conv.roles[0], inp)
+        conv.append_message(conv.roles[1], None)
+
+        if is_chatglm:
+            generate_stream_func = chatglm_generate_stream
+            prompt = conv.messages[conv.offset :]
+        else:
+            generate_stream_func = generate_stream
+            prompt = conv.get_prompt()
+
+        gen_params = {
+            "model": model_path,
+            "prompt": prompt,
+            "temperature": temperature,
+            "repetition_penalty": repetition_penalty,
+            "max_new_tokens": max_new_tokens,
+            "stop": conv.stop_str,
+            "stop_token_ids": conv.stop_token_ids,
+            "echo": False,
+        }
+
+        output_stream = generate_stream_func(model, tokenizer, gen_params, device)
+        outputs = chatio.stream_output(output_stream)
+
+        yield outputs
+
+        if debug:
+            print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
+
+
+class Vicuna(LM):
+    def __init__(self, model_path: str = "models/vicuna/7B") -> None:
+        super().__init__()
+        self.model_path = model_path
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.num_gpus = 3
+        self.max_gpu_memory = None
+        self.load_8bit = False
+        self.cpu_offloading = False
+        self.max_new_tokens = 20
+
+    def __call__(
+        self,
+        requests: list[str],
+    ) -> list[str]:
+        chatio = SimpleChatIO(requests=requests)
+        outputs = [
+            output
+            for output in chat_loop(
+                self.model_path,
+                self.device,
+                num_gpus=self.num_gpus,
+                load_8bit=self.load_8bit,
+                temperature=0.0,
+                repetition_penalty=1.0,
+                max_new_tokens=20,
+                debug=False,
+                chatio=chatio,
+                cpu_offloading=self.cpu_offloading,
+                conv_template=None,
+                max_gpu_memory=None,
+            )
+        ]
+        return outputs
+\end{lstlisting}
+
+\subsubsection*{Initializing the different embedding models}
+\begin{lstlisting}[language=Python]
+  from abc import ABC, abstractmethod
+
+  import torch
+  import torch.nn.functional as F
+  from sentence_transformers import SentenceTransformer
+  from torch import Tensor
+  from transformers import AutoModel, AutoTokenizer, BertForQuestionAnswering
+  
+  from src.similarity_measure import CosineSimilarity
+  
+  
+  class Embedder(ABC):
+      @abstractmethod
+      def embed(self, texts: list[str]) -> list[list[float]]:
+          """Embed a list of contexts"""
+          pass
+  
+      def embed_query(self, texts: list[str]) -> list[list[float]]:
+          """Embed a list of queries"""
+          return self.embed(texts)
+  
+      def embed_context(self, texts: list[str]) -> list[list[float]]:
+          """Embed a list of contexts"""
+          return self.embed(texts)
+  
+  
+  class MiniLM(Embedder):
+      def __init__(self) -> None:
+          super().__init__()
+          self.model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
+  
+      def embed(self, texts: list[str]) -> list[list[float]]:
+          embeddings = self.model.encode(texts)
+          return embeddings.tolist()
+  
+  
+  class Bert(Embedder):
+      def __init__(self) -> None:
+          super().__init__()
+          self.tokenizer = AutoTokenizer.from_pretrained("deepset/bert-base-cased-squad2")
+          self.model = BertForQuestionAnswering.from_pretrained(
+              "deepset/bert-base-cased-squad2"
+          )
+  
+      def embed(self, texts: list[str]) -> list[list[float]]:
+          inputs = [self.tokenizer(text, return_tensors="pt") for text in texts]
+          with torch.no_grad():
+              outputs = [
+                  self.model(**input, output_hidden_states=True) for input in inputs
+              ]
+              # take the average of the last hidden-state of each token to represent the sentence
+              outputs = [
+                  output.hidden_states[-1].mean(dim=1).flatten().tolist()
+                  for output in outputs
+              ]
+  
+          return outputs
+  
+  
+  class E5(Embedder):
+      def __init__(self) -> None:
+          super().__init__()
+          self.tokenizer = AutoTokenizer.from_pretrained("intfloat/e5-small")
+          self.model = AutoModel.from_pretrained("intfloat/e5-small")
+  
+      def average_pool(
+          self, last_hidden_states: Tensor, attention_mask: Tensor
+      ) -> Tensor:
+          last_hidden = last_hidden_states.masked_fill(
+              ~attention_mask[..., None].bool(), 0.0
+          )
+          return last_hidden.sum(dim=1) / attention_mask.sum(dim=1)[..., None]
+  
+      def embed(self, texts: list[str]) -> list[list[float]]:
+          batch_dict = self.tokenizer(texts, padding=True, return_tensors="pt")
+  
+          outputs = self.model(**batch_dict)
+          embeddings = self.average_pool(
+              outputs.last_hidden_state, batch_dict["attention_mask"]
+          )
+  
+          # (Optionally) normalize embeddings
+          embeddings = F.normalize(embeddings, p=2, dim=1)
+          return embeddings.detach().tolist()
+  
+      def embed_query(self, texts: list[str]) -> list[list[float]]:
+          return self.embed(["query :" + text for text in texts])
+  
+      def embed_context(self, texts: list[str]) -> list[list[float]]:
+          return self.embed(["passage :" + text for text in texts])
+\end{lstlisting}
+
+\subsubsection*{Evaluation using GPT-3 \cite{gpt3} and the lmql library \cite{lmql}}
+\begin{lstlisting}[language=Python]
+import os
+
+import dotenv
+import lmql
+import openai
+
+dotenv.load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+
+@lmql.query
+async def evaluate_gpt3(prediction: str, ground_truth: str):
+    '''argmax
+        """output 1 if the student answer is similar to true answer, 0 otherwise
+        ignore small differences
+        student answer: {prediction}
+        true answer: {ground_truth}
+        evaluation : [EVALUATION]"""
+    from
+        "openai/text-davinci-003"
+    distribution
+        EVALUATION in ["1", "0"]
+    '''  
+\end{lstlisting}
+
+\subsubsection*{Index construction}
+\begin{lstlisting}[language=python]
+from src.embedding import Embedder
+from src.text_splitter import Splitter
+from src.utils.utils import dump_pickle, read_pickle
+
+
+class Index:
+    def __init__(
+        self,
+        embedder: Embedder,
+        splitter: Splitter,
+    ) -> None:
+        super().__init__()
+
+        self.splitter = splitter
+        self.embedder = embedder
+
+    def __call__(self, document: str, index_path: str | None = None) -> list[str]:
+        """returns an indexed document"""
+        if document:
+            self.index = index = self.index_document(document)
+        elif index_path:
+            self.index = index = self.load_index(index_path)
+        else:
+            raise ValueError("Either document or an index_path must be provided")
+
+        return index
+
+    def index_document(self, document: str) -> list[tuple]:
+        chunks = self.splitter.split(document)
+        embeddings = self.embedder.embed_context(chunks)
+        return list(zip(chunks, embeddings))
+
+    def save_index(self, path: str) -> None:
+        assert self.index, "Index is empty"
+        dump_pickle(self.index, path=path)
+
+    def load_index(self, path: str) -> list[tuple]:
+        return read_pickle(path=path)
+\end{lstlisting}
 \subsection{Experiments}\label{ann:experiments}
 \end{document}
