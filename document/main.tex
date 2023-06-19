@@ -258,15 +258,14 @@ first approaches involved working with ontologies and knowledge graphs :
 However with the last advances in language modeling and information retrieval systems, document-based question answering become a more appealing option.  
 
 
-
 \subsubsection{Document-based question answering}
 Document-based question answering (DBQA) is a machine learning task that focuses on extracting accurate and relevant answers from a given document and responding in natural language to a specific query. 
 
-It involves representing and manipulating content within textual documents, such as articles, technical documentation in order to provide precise answers to user queries.
+It involves representing and manipulating content within textual documents, such as articles, technical documentation in order to provide precise answers to user's queries.
 
 DBQA systems typically involve a two stages process : 
 \begin{enumerate}
-	\item context retrieval : employing information retrieval (IR) techniques to extract relating contextual passages from the document.
+	\item context retrieval : employing information retrieval (IR) techniques to extract relating context passages from the document.
 	\item question answering (QA) : using natural language processing (NLP) approaches to answer a query using the retrieved context.  
 \end{enumerate}  
 
@@ -734,7 +733,7 @@ Using the OpenLlama project \cite{openllama} weights, we employed the LlamaForCa
 During generation, a maximum of 30 new tokens were allowed, and the generation temperature was set to 0.0 for deterministic output. 
 
 For Falcon \cite{falcon} we employed the AutoTokenizer and the "text-generation" pipeline from the HuggingFace \cite{huggingface}. 
-During generation, we used a temperature of $3e-4$. The maximum length of generated tokens was set to 30.
+During generation, we used a temperature of $3x10^{-4}$. The maximum length of generated tokens was set to 30.
 
 For Vicuna \cite{vicuna} we used FastChat \cite{fastchat} implementation.
 We use their implementation for chat input and output as a workaround for batched inference (shown in annex \ref*{ann:vicuna}). 
