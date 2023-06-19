@@ -14,8 +14,8 @@
 \usepackage[acronym]{glossaries}
 \usepackage{multirow}
 \usepackage{authblk}
-
 \usepackage{listings}
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -62,24 +62,29 @@
 \title{Document-based question answering}
 
 \begin{document}
+
+
 \maketitle
 \begin{abstract}
-In this thesis, we present a comprehensive analysis of various open-source embedding models and large language models (LLMs) for document-based question answering (DBQA). The goal of DBQA is to extract relevant information from a given document and answer user queries in natural language. We evaluate the performance of different embedding models, including BERT, E5, and MiniLM, in combination with open source LLMs such as Vicuna, Falcon, and OpenLlama.
-Our experimental setup involves a retriever-generator framework, where a retrieval system retrieves the most relevant contexts from a document using embedding models. The conditioned generative system then generates a response to the user query based on the retrieved contexts using LLMs. We benchmark the performance of these systems using the SQuAD dataset.
-We find that the choice of embedding model significantly impacts the retrieval performance. Moreover, we observe that the choice of LLM also plays a crucial role in generating accurate and informative answers.unsrt
-This comparative analysis provides insights into the strengths and weaknesses of various open-source embedding models and LLMs for DBQA tasks. The findings of this study can guide researchers and practitioners in selecting suitable models for their specific DBQA applications and contribute to the advancement of question-answering systems.
+	In this thesis, we present a comprehensive analysis of various open-source embedding models and large language models (LLMs) for document-based question answering (DBQA). The goal of DBQA is to extract relevant information from a given document and answer user queries in natural language. We evaluate the performance of different embedding models, including BERT, E5, and MiniLM, in combination with open source LLMs such as Vicuna, Falcon, and OpenLlama.
+	Our experimental setup involves a retriever-generator framework, where a retrieval system retrieves the most relevant contexts from a document using embeddings of document and query. Then we condition the generative system (LLM) with the most promising context to generate a response to the user. 
+	We benchmark the performance of these systems using a sample from the SQuAD dataset and GPT-3 as a judge.
+	We find that the choice of embedding models significantly impacts the retrieval performance. Moreover, we observe that the choice of LLM also plays a crucial role in generating accurate and informative answers.
+	This comparative analysis provides insights into the strengths and weaknesses of various open-source embedding models and LLMs for DBQA tasks. 
+	The findings of this study can guide researchers and practitioners in selecting suitable models for their specific DBQA applications and contribute to the advancement of question-answering systems.
 \end{abstract}
+
 \clearpage
 \begin{center}
-    \thispagestyle{empty}
-    \vspace*{\fill}
-    To my parents,\\
-    to my family, mentors, friends, enemies, and every person who shaped who I am, \\
-    to every rock that broke my bones, to every sea waving on the shores, \\  
-    to Algiers's seagulls waking me up morning, reminded of Allah's boons,\\
-    to Collo's men who rescued me,\\
-    to you all I dedicate not this thesis but the years that led to its maketh.\\
-    \vspace*{\fill}
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	To my parents,\\
+	to my family, mentors, friends, enemies, and every person who shaped who I am, \\
+	to every rock that broke my bones, to every sea waving on the shores, \\  
+	to Algiers's seagulls waking me up morning, reminded of Allah's boons,\\
+	to Collo's men who rescued me,\\
+	to you all I dedicate not this thesis but the years that led to its maketh.\\
+	\vspace*{\fill}
 \end{center}
 \clearpage
 
@@ -108,7 +113,8 @@ For this BIGmama confined the development of a document-based question answering
 \section{State of play}
 \subsection{Introduction}
 Creating value in the market is usually about solving a complex problem or answering a question. When it comes to the Data science and AI sector this used to be tackled with off-the-shelf solutions/applications/answers.
-However the arrival of LLMs and other fundamental models upset the level of requirements. Creating value now requires expensive,  bespoke AI applications. The requirements are no longer to predict a number, but to explain the prediction, it's no longer to recommend a blog title but to generate its whole content.   
+However the arrival of LLMs and other fundamental models upset the level of requirements. Creating value now requires expensive,  bespoke AI solutions. 
+The requirements are no longer to predict a number, but to explain the prediction, it's no longer to recommend a blog title but to generate its whole content.   
 
 \subsection{Asset-based consulting}
 This evolvement of the business landscape, driven by rapid technological advancements, changing market dynamics, and increasing competition created a fast-paced environment, where organizations seek innovative ways to optimize their operations, unlock hidden potentials, and achieve sustainable growth. 
@@ -117,32 +123,50 @@ Today we are well aware that answering these organizations needs for innovation 
 
 This has given rise to a thriving industry known as asset-based consulting (ABC).
 
-Asset-based consulting is a specialized field within consulting that focuses on identifying, leveraging, and maximizing the value of a company's assets, AI can be incorporated in the schema of consulting by leveraging the data/knowledge/expertise of the company, incorporating it with intelligent systems, automatize tasks and improve the productivity of its users in general. 
+Asset-based consulting is a specialized field within consulting that focuses on creating, leveraging, and maximizing the value of a company's assets, 
+AI can be incorporated in the schema of consulting by leveraging the data/knowledge/expertise of the company, incorporating it with intelligent systems, 
+automatize tasks and improve the productivity of its users in general. 
 
-In the ABC context, assets can include tangible resources such as infrastructure, technology, and inventory, as well as intangible assets like intellectual property, brand equity, and human capital. By harnessing the full potential of these assets, asset-based consultants help organizations drive operational efficiency, enhance performance, and create a competitive advantage.
+In the ABC context, assets can include tangible resources such as infrastructure, 
+technology, and inventory, as well as intangible assets like intellectual property, brand equity, and human capital. 
+By harnessing the full potential of these assets, asset-based consultants help organizations drive operational efficiency, 
+enhance performance, and create a competitive advantage.
 
-Unlike traditional consulting approaches that often emphasize external factors and strategies, asset-based consulting takes a more holistic and internal perspective. It recognizes that companies possess unique assets and capabilities that, when strategically managed, or in our case, combined with AI, can serve as the foundation for sustainable competitive advantage and resilience. Here consultants work closely with clients to understand their expertise, identify untapped questions and needs, and design tailored solutions.
+Unlike traditional consulting approaches that often emphasize external factors and strategies, 
+asset-based consulting takes a more holistic and internal perspective. 
+It recognizes that companies possess unique assets and capabilities that, when strategically managed, or in our case, combined with AI, 
+can serve as the foundation for sustainable competitive advantage and resilience. 
+Here consultants work closely with clients to understand their expertise, identify untapped questions and needs, and design tailored AI solutions.
 
-Asset-based consulting is known for its multidisciplinary nature, drawing expertise from various fields including finance, operations, technology, marketing, and human resources. Consultants blend their industry knowledge, analytical skills, and business acumen to assess, diagnose, and unlock the hidden value with innovative assets. They often conduct thorough assessments, employ data-driven methodologies, and collaborate closely with expert teams to align the asset usefulness with the overall business objectives.
+Asset-based consulting is known for its multidisciplinary nature, drawing expertise from various fields including finance, 
+operations, technology, marketing, and human resources. 
 
-As industries become increasingly complex and competitive, the demand for asset-based consulting continues to rise. Organizations of all sizes and sectors recognize the need to unlock the value within their assets to stay ahead of the curve. From manufacturing firms seeking to optimize their supply chains to technology companies aiming to capitalize on their intellectual property, asset-based consulting provides a strategic framework and expertise to achieve these objectives.
+Consultants blend their industry knowledge, analytical skills, and business acumen to assess, 
+diagnose, and unlock the hidden value with innovative assets. They often conduct thorough assessments, employ data-driven methodologies, and collaborate closely with expert teams 
+to align the asset usefulness with the overall business objectives.
+
+As industries become increasingly complex and competitive, the demand for asset-based consulting continues to rise. 
+Organizations of all sizes and sectors recognize the need to unlock the value with AI assets to stay ahead of the curve. 
+From manufacturing firms seeking to optimize their supply chains to technology companies aiming to capitalize on their intellectual property, 
+asset-based consulting provides a strategic framework and expertise to achieve these objectives.
 
 \subsection{BIGmama technology}
 BIGmama is a French registered startup with an Algerian extension, specialized in data science and AI. 
 They have been developing bespoke predictive applications for more than 8 years (as of the year 2023).
 
-The board of directors counts former CEOs of global groups (Danone, Safran) and the team is assembled from a dozen of high-level data scientists and software engineers.
+The board of directors counts former CEOs of global groups (Danone, Safran) and the team is assembled from a dozen of high-level data scientists 
+and software engineers.
 
 \subsection{Mission}
-BIGmama's mission is to democratize the access to bespoke AI applications, and to transform companies and individuals by introducing AI in their jobs however possible. 
+BIGmama's mission is to democratize the access to bespoke AI applications, to transform companies and individuals by introducing AI in their jobs however possible. 
 
-From an original method based on the know-how developed while working with their partners for nearly a decade that we automate or increase with algorithms (Hybrid AI).
+From an original method based on the know-how developed while working with their partners for nearly a decade, 
+they are able of identifying and extracting expertise as well as combine it with machine learning system (Hybrid AI).
 
-What is important at BIGmama today is to be able to industrialize this methodology by proposing a software that encapsulates and hybridizes this expertise with ML models. In this way, this tool will allows them to build state of the art predictive applications, relatively quickly and at an affordable cost.
+What is important at BIGmama today is to be able to industrialize this methodology by proposing a software (HYKO) that automatize the extraction of expertise and 
+its hybridization with machine learning models. In this way, this tool will allows them to build state of the art predictive applications, relatively quickly and at an affordable cost.
 
 They believe that a large part of the future of the AI sector will be played out in the ability to articulate human expertise with the countless possibilities offered by AI models.
-
-The last version of the software they are developing (HYKO), should be released by this June.
 
 \subsection{Vision}
 Data science will soon become a commodity, the arrival of large language models (which are considered foundational models in NLP) mark but a start of a new wave of foundational models. In the near future, we can expect the emergence of generalist models that are equivalent to ChatGPT but specialized in computer vision tasks, forecasting, pattern recognition, and other domains.
@@ -152,49 +176,88 @@ AI projects that take 6 months in the making, require extensive "hyper-parameter
 The future is going to become in the hands of those who are capable of harnessing the power of these generalist models. Algeria and the whole African continent is far behind, and its no longer a question of closing this gap step by step, a "quantum jump" is required. BIGmama will lead this quantum jump, and will prove that excellence can beam from within the African continent. 
 
 \subsection{Unique methodology}
-One of the valuable heritages that BIGmama acquired during the 8 years of actively developing bespoke AI applications to its clients is a the unique methodology of work at BIGmama. it's centered around the idea is 
+One of the valuable heritages that BIGmama acquired during the 8 years of actively developing bespoke AI applications to its clients is a the unique methodology of work at BIGmama. 
+This methodology is centered around the following ideas : 
 
 \subsubsection{AI starts with problematization.}
-Data science does not start with data science but with a re-framing and problematization work. Our clients most often arrive with a subject (and not problems). A subject in it self is composed of many "hidden" problems (often hidden even to the client), a good consultant at BIGmama knows that this process of problematization (that of decomposing the subject into multiple problems) requires multiple iterations and attempts, and its success is deeply rooted to that of understanding the expertise of the client, their needs and to the skills of the consultant to translate these problems into something addressable by the current AI models.
+Bespoke AI solutions development does not start with AI but with a re-framing and a "problematization" work. 
+Clients most often arrive with a subject (and not problems). A subject in it self is composed of many "hidden" problems (often hidden even to the client), 
+a good consultant at BIGmama knows that the process of "problematization" (that of decomposing the subject into multiple problems) requires multiple iterations and attack angles, 
+and that its success is deeply rooted to that of understanding the expertise of the clients, their needs and to the skills of the consultant to translate these problems into something addressable 
+by the current AI models.
 
 \subsubsection{AI is a tool, not an end-goal}
-At BIGmama, we firmly believe that AI should be seen as a powerful tool rather than an ultimate goal in itself. While AI technology continues to advance rapidly, its true value lies in its ability to address and solve specific problems or challenges faced by individuals, businesses, and society as a whole.
-By recognizing AI as a tool, we emphasize its role in enabling and enhancing human capabilities rather than replacing them. And we emphasis that the current approaches in AI are not always the best to solve \textit{every} problem.
+BIGmama firmly believes that AI should be seen as a powerful tool rather than an ultimate goal in itself. While AI technologies continues to advance rapidly, 
+its true value lies in its ability to address and solve real-world problems and challenges faced by individuals, businesses, and society as a whole.
+By recognizing AI as a tool, BIGmama emphasize its role in enabling and enhancing human capabilities rather than replacing them, and emphasis that the current 
+approaches in AI are not always the best way to solve \textit{every} problem.
 
 \subsubsection{Hybridization}
-We believe that the future of AI lies in what is commonly referred to today as hybrid AI. This is a set of approaches and methodologies aimed at combining the potential of models with purely human knowledge. We believe that this hybridization allows us to put humans at the heart of technological development and to produce tools that are more efficient, easier to maintain, explain and that are far less expensive.
+The future of AI lies in what is commonly referred to today as hybrid AI. 
+This is a set of approaches and methodologies aiming at combining the potential of models with purely human knowledge. 
+This hybridization allows BIGmama to put humans at the heart of technological development and to produce tools that are more efficient, easier to maintain, 
+explain and that are far less expensive.
 
 \subsection{Software as a service (SaaS)}
-BIGmama is currently working on a software that intrinsically embeds its mission of democratizing AI and its unique methodology of how to do so. Hyko is an iterative software that help users formulate their problems properly using AI conversational systems powered by LLMs. It then automatically generate a working applications prototypes that combines and orchestrate multiple AI models predisposed in the user's model-base.
+BIGmama is currently working on a software that intrinsically embeds its mission of democratizing AI and its unique methodology of how to do so. 
+Hyko is an iterative software that help users formulate their problems properly using AI conversational systems powered by LLMs. 
+It then automatically generate working applications that combines and orchestrate multiple AI models predisposed in a model-base.
 
 Hyko can be described as a three steps iterative process :
 
 \paragraph{Diagnosis and problematization (Scoping)}
+As discussed earlier developing a bespoke AI application starts first by identifying the needs and sub-problems of your clients. 
+Folks at BIGmama were able to identify the most important questions to ask your client in order to reach a common understanding of what can be done and how.
+These questions cover topics ranging from ethics and governance, success conditions, explainability of the solution, to empirical rules discovered by the experts.
+
+Today this process of scoping is automatized with an intelligent chatbot in Hyko. 
 
 \paragraph{Automatic prototyping}
 Hyko leverages the ever increasing availability of open-source AI models (Huggingface \cite{huggingface}, Github, etc.)
-and the zero-shot reasoning capabilities \cite{zeroshot} of today's LLMs to solve the following tasks : 
+and the zero-shot reasoning capabilities \cite{zeroshot} of today's LLMs to generate a first prototype solution based on the output of the scoping phase.  
+
+In order to design and execute this prototype we need first to solve the following two tasks : 
 
 \begin{enumerate}
-    \item task planning : designing how the tasks should be addressed, setting up the inputs, outputs and the dependencies of each task in the pipeline.
-    \item model selection : selecting the right model in each step of the pipeline.
+	\item task planning : designing how the sub problems interact and should be addressed, setting up the inputs, outputs and the dependencies of each problem (task) in the pipeline.
+	\item model selection : selecting the right model (available in the model base) to tackle each problem in the pipeline.
 \end{enumerate}
 
-Similar to HuggingGPT \cite{hugginggpt}, by solving these tasks Hyko is capable of going from a description of the user's problems to a working AI prototype solution.
+Similar to HuggingGPT \cite{hugginggpt}, by solving these tasks Hyko is capable of going from a scoping of the user's problems to 
+an executable AI prototype solution fully automatically.
 
 
 \paragraph{Enhancement of the prototype}
+The last step involves further customizing and enhancing the prototype to the exact needs of the client.
+Following this framework Building tailor-made AI solution will become cheaper faster and accessible to everyone, requiring minimal (to none) technical intervention.
 
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=.5\linewidth]{figures/3process.png}
-\caption{Iterative process of developing an AI asset in Hyko.}
-\label{fig:hykoprocess}
+	\centering
+	\includegraphics[width=.5\linewidth]{figures/3process.png}
+	\caption{Iterative process of developing an AI asset in Hyko.}
+	\label{fig:hykoprocess}
 \end{figure}
 
 \subsection{Knowledge representation}
-A very important aspect of the first step (Scoping) is the ability to represent already existing knowledge (technical documents for example) and make it digestible by the LLMs behind the scoping phase.
+A very important aspect of the first step (Scoping) is the ability to represent already existing knowledge (e.g. technical documents) 
+and make it digestible by Hyko chatbot. 
+
+This allows the chatbot to use necessary information and guide the conversation effectively.
+
+At BIGmama we experimented with various techniques and methods for representing existing body of knowledge, 
+first approaches involved working with ontologies and knowledge graphs :
+
+\begin{enumerate}
+	\item Ontologies: Ontologies provide a structured way to represent knowledge by defining concepts, relationships, and properties within a specific domain. They establish a common vocabulary and enable reasoning about the knowledge. 
+	      Ontologies are often represented using ontology languages like RDF (Resource Description Framework) or OWL (Web Ontology Language).
+	\item Knowledge graphs: Knowledge graphs organize knowledge as a network of interconnected nodes representing entities, concepts, or facts. 
+	      These graphs capture not only the relationships between entities but also their attributes and contextual information. Knowledge graphs can be built using graph databases or triple stores.
+\end{enumerate}
+
+However with the last advances in language modeling and information retrieval systems, document-based question answering become a more appealing option.  
+
+
 
 \subsubsection{Document-based question answering}
 Document-based question answering (DBQA) is a machine learning task that focuses on extracting accurate and relevant answers from a given document and responding in natural language to a specific query. 
@@ -203,21 +266,32 @@ It involves representing and manipulating content within textual documents, such
 
 DBQA systems typically involve a two stages process : 
 \begin{enumerate}
-    \item context retrieval : employing information retrieval (IR) techniques to extract relating contextual passages from the document.
-    \item question answering (QA) : using natural language processing (NLP) approaches to answer a query using the retrieved context.  
+	\item context retrieval : employing information retrieval (IR) techniques to extract relating contextual passages from the document.
+	\item question answering (QA) : using natural language processing (NLP) approaches to answer a query using the retrieved context.  
 \end{enumerate}  
 
 \subsection{Conclusion}
-In this paper we will dive deeper into the different frameworks, models and techniques used in DBQA systems (and similar QA tasks).
-
-In this project we experimented with different DBQA systems, we prepared a small benchmark for few open-source LLMs used (in many combinations) with simple context retrieval systems.
+In this paper we will dive deeper into the different frameworks, models and techniques used in DBQA systems (and similar QA tasks). 
+We experimented further with different DBQA retriever-generator settings, we prepared a small benchmark for few open-source LLMs used (in combinations) 
+with context retrieval systems.
 
 \clearpage
 \section{State of the art}
 
 \subsection{Introduction}
+Natural Language Processing (NLP) is a subfield of artificial intelligence (AI) that focuses on the interaction between computers and human language. 
+It involves the development of algorithms and models that enable computers to understand, interpret, and generate human language in a meaningful way.
 
-\subsubsection{NLP Tasks}
+One fundamental aspect of NLP is the representation of words as dense vectors in a high-dimensional space, known as embeddings. 
+Word embeddings aim to capture the semantic and syntactic relationships between words, enabling algorithms to process language more effectively. 
+These embeddings can be created using neural or statistical approaches.
+
+Transformers, introduced by "attention is all you need" \cite{attention}, are a type of deep learning model that revolutionized NLP. 
+Transformers utilize attention mechanisms, which allow the model to attend to different parts of the input sequence when processing each element. 
+The encoder-decoder architecture extends the transformer model to handle tasks with varying input and output sequence lengths.
+
+As we will see NLP plays a crucial role in tackling the DBQA task, but first we will dive further into the state-of-the-art of the different embedding models 
+and transformer architectures available in the litterateur. We will further explore the different frameworks used to solve similar tasks to DBQA.  
 
 
 \subsubsection{Embeddings}
@@ -276,9 +350,7 @@ where $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ are the query, key, and value
 
 To capture different types of information, self-attention is performed multiple times in parallel, with different learned linear projections. The outputs of these attention heads are concatenated and linearly transformed:
 
-$$
-MultiHead(X) = Concat(head_1, head_2, ..., head_h)W_O
-$$
+$$MultiHead(X) = Concat(head_1, head_2, ..., head_h)W_O$$
 
 where $head_i = SelfAttention(XW_{Qi}, XW_{Ki}, XW_{Vi})$, $W_{Qi}$, $W_{Ki}$, and $W_{Vi}$ are learnable weight matrices, and $W_O$ is the output weight matrix.
 
@@ -305,10 +377,26 @@ where $Decoder$ represents the decoder, $\mathbf{Z}$ is the encoded representati
 
 The decoder processes the output sequence $\mathbf{Y}$ and attends to the encoded representation $\mathbf{Z}$ to generate the output. The decoder also employs self-attention, allowing it to attend to previously generated elements in the output sequence.
 
+\textbf{Decoder Transformer}
+The decoder transformer is an essential component of the transformer model for text generation tasks. It operates in an autoregressive manner, generating one token at a time. Given an encoded representation $Z$ obtained from the encoder, 
+the decoder attends to $Z$ and utilizes self-attention mechanisms to capture contextual dependencies.
+
+Writers of \cite{formaltransformer} gives a good formulation for the decoder transformer task : 
+
+Given a vocabulary $\mathcal{V}$, let $x_n \in \mathcal{V}$ for $n \in [N_{data}]$ be a dataset of sequences (imagined to be) sampled i.i.d. from some distribution $P$ over $\mathcal{V}$. 
+The goal is to learn an estimate $\hat{P}$ of the distribution $P(x)$. 
+In practice, the distribution estimate is often decomposed via the chain rule as $\hat{P}(x) = \hat{P}{\theta}(x[1]) \cdot \hat{P}{\theta}(x[2] ,|, x[1]) \cdot \ldots \cdot \hat{P}_{\theta}(x[T] ,|, x[1:T-1])$, 
+where $\theta$ consists of all neural network parameters to be learned. 
+The goal is to learn a distribution over a single token $x[t]$ given its preceding tokens $x[1:t-1]$ as context.
+
+By iteratively generating each token while considering the context, the decoder transformer produces high-quality and coherent text. 
+It is widely used in various applications such as machine translation, text summarization, and question answering.
+
 \subsubsection{Similarity measures}
 Similarity measures are used to quantify the degree of similarity or dissimilarity between two objects or vectors. They are widely used in various domains, including information retrieval, recommendation systems, and clustering. Different similarity measures capture different aspects of similarity based on the specific requirements of the task.
 
 Here we mention a few examples of similarity measures commonly used in the litterateur. However the selection of a suitable similarity measure is contingent upon the characteristics of the data and the particular objectives of the task being performed.
+
 
 \textbf{Cosine Similarity:}
 
@@ -356,10 +444,10 @@ Its hard to benchmark the performance of these models due to the wide range of a
 Huggingface recently published an LLM leaderboard \cite{open-llm-leaderboard}, where they evaluate publicly available LLMs on 4 key benchmarks : 
 
 \begin{enumerate}
-    \item AI2 Reasoning Challenge (25-shot) - a set of grade-school science questions \cite{AI2}.
-    \item HellaSwag (10-shot) - a test of commonsense inference, which is easy for humans (~95\%) but challenging for SOTA models \cite{hellaswag}. 
-    \item MMLU (5-shot) - a test to measure a text model’s multitask accuracy. The test covers 57 tasks including elementary mathematics, US history, computer science, law, and more \cite{MMLU}.
-    \item TruthfulQA (0-shot) - a benchmark to measure whether a language model is truthful in generating answers to questions \cite{truthfulqa}.
+	\item AI2 Reasoning Challenge (25-shot) - a set of grade-school science questions \cite{AI2}.
+	\item HellaSwag (10-shot) - a test of commonsense inference, which is easy for humans (~95\%) but challenging for SOTA models \cite{hellaswag}. 
+	\item MMLU (5-shot) - a test to measure a text model’s multitask accuracy. The test covers 57 tasks including elementary mathematics, US history, computer science, law, and more \cite{MMLU}.
+	\item TruthfulQA (0-shot) - a benchmark to measure whether a language model is truthful in generating answers to questions \cite{truthfulqa}.
 \end{enumerate}
 
 Most of the top performing models in this benchmark are either fine-tuned Falcon \cite{falcon} or fine-tuned LLama \cite{llama}.
@@ -374,17 +462,77 @@ even outperform state-of-the-art models trained on curated datasets like The Pil
 The authors of this dataset\cite{falcondataset} have released the Falcon \cite{falcon} language models with 1.3/7.5 billion parameters trained on this dataset, 
 which serve as valuable resources for this project.
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.5\linewidth]{figures/falcon.png}
+	\caption{Models trained on REFINEDWEB \cite{falcondataset} alone outperform models trained on curated corpora}
+	\label{fig:falcon}
+\end{figure}
+
 \paragraph*{LLaMa}
 The authors of \cite{llama} present LLaMA, a collection of foundation language models with parameters ranging from 7 billion to 65 billion. 
 They demonstrate that it is possible to train state-of-the-art models using publicly available datasets alone, without relying on proprietary or inaccessible data. 
 In particular, LLaMA-13B surpasses the performance of GPT-3 (175B) \cite{gpt3} on most benchmarks, and LLaMA-65B is on par with other top models like Chinchilla-70B \cite{chinchilla} and PaLM-540B \cite{palm}. 
 By making open-sourcing the LLaMA architecture and training code and by making the weights available for researchers, plenty of other models appeared as a result of fine-tuning the original LLaMA models on various tasks and datasets, 
-these fine-tuned models include Alpaca \cite{alpaca} and Vicuna \cite{vicuna}. 
+these fine-tuned models include Alpaca \cite{alpaca} and Vicuna \cite{vicuna}.     
 
-OpenLLaMa \cite{openllama} provides a totally open-source replication (weights and code, no research-only restriction) of the original LLaMA \cite{llama} models and which surprisingly in some cases outperforms the original models according to their benchmark \cite{openllama}     
+\paragraph*{Open-LLaMA} \cite{openllama} provides a totally open-source replication (weights and code, no research-only restriction) of the original LLaMA \cite{llama} models and which surprisingly in some cases outperforms the original models according to their benchmark \cite{openllama}.
+
+Open-LLaMA is a permissively licensed open source reproduction of LLaMA \cite{llama} 7B and 13B trained on the RedPajama \cite{redpajama} dataset. 
+
+It was evaluated on a wide range of tasks using lm-evaluation-harness \cite{eval-harness} (results shown in table \ref*{tab:openllama}). 
+The LLaMA \cite{llama} results are generated by running the original LLaMA model on the same evaluation metrics. 
+They note that the results for the LLaMA model differ slightly from the original LLaMA paper, which can be due to different evaluation protocols. 
+Additionally, they present the results of GPT-J \cite{gptj}, a 6B parameter model trained on the Pile dataset \cite{pile}.
+
+The original LLaMA model was trained for 1 trillion tokens and GPT-J was trained for 500 billion tokens. from the results presented in table \ref*{tab:openllama} 
+OpenLLaMA exhibits comparable performance to the original LLaMA \cite{llama} and GPT-J \cite{gptj} across a majority of tasks, and outperforms them in some tasks.
+
+\begin{table}[h]
+	\centering
+	\resizebox{\textwidth}{!}{\begin{tabular}{|l|l|l|l|l|l|l|}
+		\hline
+		Task/Metric& GPT-J 6B & LLaMA 7B & LLaMA 13B & OpenLLaMA 7B & OpenLLaMA 3B & OpenLLaMA 13B \\ \hline
+		anli\_r1/acc & 0.32 & 0.35 & 0.35 & 0.33 & 0.33 & 0.33 \\ \hline
+		anli\_r2/acc & 0.34 & 0.34 & 0.36 & 0.36 & 0.32 & 0.33 \\ \hline
+		anli\_r3/acc & 0.35 & 0.37 & 0.39 & 0.38 & 0.35 & 0.40 \\ \hline
+		arc\_challenge/acc & 0.34 & 0.39 & 0.44 & 0.37 & 0.34 & 0.41 \\ \hline
+		arc\_challenge/acc\_norm & 0.37 & 0.41 & 0.44 & 0.38 & 0.37 & 0.44 \\ \hline
+		arc\_easy/acc & 0.67 & 0.68 & 0.75 & 0.72 & 0.69 & 0.75 \\ \hline
+		arc\_easy/acc\_norm & 0.62 & 0.52 & 0.59 & 0.68 & 0.65 & 0.70 \\ \hline
+		boolq/acc & 0.66 & 0.75 & 0.71 & 0.71 & 0.68 & 0.75 \\ \hline
+		hellaswag/acc & 0.50 & 0.56 & 0.59 & 0.53 & 0.49 & 0.56 \\ \hline
+		hellaswag/acc\_norm & 0.66 & 0.73 & 0.76 & 0.72 & 0.67 & 0.76 \\ \hline
+		openbookqa/acc & 0.29 & 0.29 & 0.31 & 0.30 & 0.27 & 0.31 \\ \hline
+		openbookqa/acc\_norm & 0.38 & 0.41 & 0.42 & 0.40 & 0.40 & 0.43 \\ \hline
+		piqa/acc & 0.75 & 0.78 & 0.79 & 0.76 & 0.75 & 0.77 \\ \hline
+		piqa/acc\_norm & 0.76 & 0.78 & 0.79 & 0.77 & 0.76 & 0.79 \\ \hline
+		record/em & 0.88 & 0.91 & 0.92 & 0.89 & 0.88 & 0.91 \\ \hline
+		record/f1 & 0.89 & 0.91 & 0.92 & 0.90 & 0.89 & 0.91 \\ \hline
+		rte/acc & 0.54 & 0.56 & 0.69 & 0.60 & 0.58 & 0.64 \\ \hline
+		truthfulqa\_mc/mc1 & 0.20 & 0.21 & 0.25 & 0.23 & 0.22 & 0.25 \\ \hline
+		truthfulqa\_mc/mc2 & 0.36 & 0.34 & 0.40 & 0.35 & 0.35 & 0.38 \\ \hline
+		wic/acc & 0.50 & 0.50 & 0.50 & 0.51 & 0.48 & 0.47 \\ \hline
+		winogrande/acc & 0.64 & 0.68 & 0.70 & 0.67 & 0.62 & 0.70 \\ \hline
+		Average & 0.52 & 0.55 & 0.57 & 0.55 & 0.53 & 0.57 \\ \hline
+		\end{tabular}}
+	\label{tab:openllama}
+	\caption{Evaluation of OpenLlama on the lm-evaluation-harness comparing to LLaMa and GPT-J} 
+\end{table}
+
+\paragraph*{Vicuna} \cite{vicuna} is an open-source chatbot trained by fine-tuning LLaMA \cite{llama} on user-shared conversations collected from ShareGPT. The preliminary evaluation conducted using GPT-4 as a judge demonstrates that Vicuna-13B achieves more than 90\% 
+quality compared to OpenAI's ChatGPT and Google Bard, surpassing models like LLaMA \cite{llama} and Stanford Alpaca \cite{alpaca} in over 90\% of cases. 
+The cost of training Vicuna-13B is approximately \$300 (which is very impressive !). The code, weights, and an online demo of the chatbot are publicly available for non-commercial use.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=.5\linewidth]{figures/vicuna.png}
+	\caption{Response comparison of Vicuna assessed by GPT-4}
+	\label{fig:vicuna}
+\end{figure}
+
 
 \subsection{Question answering}
-\subsubsection{Visual QA}
 \subsubsection{Open-domain QA}
 Open-domain Question Answering (ODQA) is a
 task examining the ability of models to produce answers to natural language factoid questions drawn
@@ -401,8 +549,8 @@ Nevertheless approaches in ODQA are applicable for DBQA.
 Open-book models in the field of Open-Domain Question Answering (ODQA) initially retrieve relevant documents then either extract or generate answers based on the information contained in the retrieved documents. We can distinguish mainly two approaches to tackle the ODQA problem :
 
 \begin{enumerate}
-    \item Retriever-reader : this model works toward finding the related context in the documentation than process the retrieved context to \textbf{extract} the start/end positions of an answer. The output of the model is the selected context and the identified span of the answer in the context. 
-    \item Retriever-generator : unlike the reader model, the generator model generate free text conditioned with the retrieved context to answer the question.
+	\item Retriever-reader : this model works toward finding the related context in the documentation than process the retrieved context to \textbf{extract} the start/end positions of an answer. The output of the model is the selected context and the identified span of the answer in the context. 
+	\item Retriever-generator : unlike the reader model, the generator model generate free text conditioned with the retrieved context to answer the question.
 \end{enumerate}
 
 \paragraph{Retriever-reader}
@@ -413,10 +561,10 @@ Retrieval-Augmented Generation \cite{rag} is a seq2seq model that jointly learns
 
 
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.8\linewidth]{figures/openbook.png}
-  \caption{Overview of open-book question answering approaches.}
-  \label{fig:openbook}
+	\centering
+	\includegraphics[width=0.8\linewidth]{figures/openbook.png}
+	\caption{Overview of open-book question answering approaches.}
+	\label{fig:openbook}
 \end{figure}
 
 \subsubsection{Closed-book QA}
@@ -426,11 +574,11 @@ The pre-trained language models generate free-form text responses to questions, 
 Closed-book models can encode the given documentation within the parameters of the model itself to answer queries, rather than using a retrieval model.
 
 \begin{figure}
-  \begin{center}
-    \includegraphics[width=0.4\textwidth]{figures/closedbook.png}
-  \end{center}
-\caption{Overview of closed-book fine-tuned QA.}
-\label{fig:closedbook}
+	\begin{center}
+		\includegraphics[width=0.4\textwidth]{figures/closedbook.png}
+	\end{center}
+	\caption{Overview of closed-book fine-tuned QA.}
+	\label{fig:closedbook}
 \end{figure}
 
 Authors of \cite{T5Qa} fine-tune a pre-trained T5 \cite{T5} model to answer questions
@@ -440,17 +588,17 @@ explicitly retrieve answers from an external knowledge source when answering que
 GPT-3 \cite{gpt3} has been evaluated on the closed book question answering task using the TriviaQA dataset \cite{triviaqa} without any gradient updates or fine-tuning, the evaluation (figure \ref{fig:gpt3}) shows that GPT-3 match/exceed the performance of state of the art (at that time).
 
 \begin{figure}
-\centering
-\includegraphics[width=0.8\linewidth]{figures/gpt3-triviaqa.png}
-\caption{GPT3's performance on TriviaQA \cite{triviaqa}. \cite{gpt3}}
-\label{fig:gpt3}
+	\centering
+	\includegraphics[width=0.8\linewidth]{figures/gpt3-triviaqa.png}
+	\caption{GPT3's performance on TriviaQA \cite{triviaqa}. \cite{gpt3}}
+	\label{fig:gpt3}
 \end{figure}
 
 \subsection{Retrieval models}
 When it comes to implementing a retriever for a retriever-generator/retriever-reader models, there is mainly two systems : 
 \begin{enumerate}
-    \item using classic non-learning-based TF-IDF features (“classic IR”).
-    \item or using dense embedding vectors of text produced by neural networks (“neural IR”).
+	\item using classic non-learning-based TF-IDF features (“classic IR”).
+	\item or using dense embedding vectors of text produced by neural networks (“neural IR”).
 \end{enumerate}
 
 \paragraph{classic IR}
@@ -468,15 +616,15 @@ Neural IR is a new category of methods for retrieval problems, it mainly uses de
 
 After the arrival of many "general language models" (to do cite llms) many IR for QA systems follow this (or a slightly different) approach :
 \begin{enumerate}
-    \item Extract the dense representations of a question and a context passage by feeding them into a language model.
-    \item Use the dot-product of these two representations as the retrieval score to rank and select most relevant passages.
+	\item Extract the dense representations of a question and a context passage by feeding them into a language model.
+	\item Use the dot-product of these two representations as the retrieval score to rank and select most relevant passages.
 \end{enumerate}
 
 $$h_q=E_q(q)$$ 
 $$h_z=E_z(z)$$
 $$score=h_q^\mathsf{T} h_z$$
 
-(however it is not necessary that neural IR out-performs classic IR \cite{lin})
+(however it is not necessary that neural IR out-performs classic IR \cite{lin}).
 
 \subsection{Reader Models}
 The reader model objective is to learn solve reading comprehension tasks, extract an answer for a question from a retrieved context. 
@@ -487,9 +635,9 @@ Here we only discuss approaches for machine comprehension using neural networks 
 \subsection{Introduction}
 In our Implementation we chose a retriever-generator approach, we experimented with different combinations of embedding and Language models, as well as different similarity measures and text splitting strategies.
 
-We evaluated the different systems using a sample from the SQuAD \cite{squad} dataset and GPT-3 \cite{gpt3} as a scoring model, more about that in the sections below.  
+We evaluated the different systems using a sample from the SQuAD \cite{squad} dataset while using GPT-3 \cite{gpt3} as a scoring model (more about that in the sections below).  
 
-LlamaIndex \cite{llamaindex} tested out few indexing methods (embeddings, LLMs and retrieval systems) following a similar framework to ours. 
+\paragraph*{Similar work} LlamaIndex \cite{llamaindex} tested out few indexing methods (embeddings, LLMs and retrieval systems) following a similar framework to ours. 
 However their focus was on OpenAI proprietary language models (GPT-3 and GPT-4) \cite{gpt3, gpt4}. Our focus in this project 
 on the other hand is on using open-source embedding models and LLMs that can fully run on-premise, since model and data sovereignty are a critical aspect for our use-case.
 
@@ -498,92 +646,117 @@ In the following sections we will provide more details on our implementation as 
 \subsection{challenges}
 The following challenges arise when using LLMs for DBQA : 
 \begin{enumerate}
-  \item Small context window: LLMs typically have a limited context window, which means they can only consider a fixed number of preceding and succeeding tokens when generating a response. In DBQA, where the answer may depend on information scattered throughout a document, this limited context window can make it difficult for LLMs to capture the necessary context and provide accurate answers. Relevant information may fall outside the context window, leading to incomplete or incorrect responses.
-  \item Hallucination: LLMs can sometimes generate responses that are plausible-sounding but factually incorrect. This phenomenon, known as hallucination, can be a significant issue in DBQA. Since LLMs rely on statistical patterns and language modeling rather than true understanding, they may generate answers that sound reasonable but are not grounded in the actual content of the document. Hallucination can mislead users and compromise the reliability of the DBQA system.
-  \item Storing the models and computational demand for inference: LLMs, especially large-scale models, require substantial computational resources for both training and inference. Storing these models and performing inference can be challenging due to their size and computational demands. DBQA systems that utilize LLMs need to address issues such as efficient model storage, quick retrieval of relevant models, and the computational infrastructure required to perform real-time inference on large documents. These demands can pose practical challenges for deploying LLM-based DBQA systems at scale.
+	\item Small context window: LLMs typically have a limited context window, which means they can only consider a limited number of preceding tokens when generating a response. In DBQA, where the answer may depend on information scattered throughout a document, this limited context window can make it difficult for LLMs to capture the necessary context and provide accurate answers. Relevant information may fall outside the context window, leading to incomplete or incorrect responses. 
+    This is why we need information retrieval systems when choosing the context.
+	\item Hallucination: LLMs can sometimes generate responses that are plausible-sounding but factually incorrect. 
+    This phenomenon, known as hallucination, can be a significant issue in DBQA. Since LLMs rely on statistical patterns and language modeling rather than true understanding, they may generate answers that sound reasonable but are not grounded in the actual content of the document. Hallucination can mislead users and compromise the reliability of the DBQA system.
+	\item Storing the models and computational demand for inference: LLMs, especially large-scale models, require substantial computational resources for both training and inference. Storing these models and performing inference can be challenging due to their size and computational demands. These demands can pose practical challenges for deploying LLM-based DBQA systems at scale.
 \end{enumerate}
 
 We were able to workaround the first challenge using IR system based on neural-embedding. 
 For the second challenge we tried using small temperature (a hyperparameter used to control the randomness of the generated text) and presence penalty values (high presence penalty values results in the model being more likely to 
 generate tokens that have not yet been included in the generated text and vice-versa).
-Using smaller models (7B parameters each) (required around 36GB of memory) and allowed us to run the inferences on a multi-GPU machine.
+Using smaller models (7B parameters each) required around 36GB of memory, we ran the inferences on a multi-GPU machine.
 
 \subsection{Description}
 The systems that we experimented with follows the retriever-generator framework which consists mainly of two parts : 
 
-\paragraph{a retrieval system} that takes as input a document (text) and a query from the user, it splits the document into sentences using a heuristic algorithm developed for the processing the Parallel Corpus for Statistical Machine Translation \cite{europarl}. Each sentence from the document along the query of the user are going to be embedded by one of the chosen embedding models. We measure the one-to-one similarity (using cosine similarity) between the query embedding and each sentence embedding and we retrieve the top $K$ sentences to be used a context.
+\paragraph{A retrieval system} that takes as input a document (text) and a query from the user, splits the document into sentences. 
+Each sentence from the document along the query of the user are going to be embedded by one of the chosen embedding models. We measure the one-to-one similarity (using cosine similarity) 
+between the query embedding and each sentence embedding and we retrieve the top $K$ sentences to be used a context.
 
-\paragraph{a conditioned generative system} it takes as input the retrieved contexts and the query to construct a prompt that condition the generation using one of the chosen open-source LLMs.
-In table \ref{tab:benchmark} we show that we tested all the possible combination of the different embedding models and LMs at hand.
+\paragraph{A conditioned generative system} it takes as input the retrieved contexts and the query to construct a prompt that condition the generation using one of the chosen open-source LLMs.
+In table \ref{tab:benchmark} we show that we tested all the possible combinations of the different embedding models and LMs at hand.
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=.9\linewidth]{figures/full.png}
-\caption{Highlevel overview of the whole system.}
-\label{fig:overview}
+	\centering
+	\includegraphics[width=.9\linewidth]{figures/full.png}
+	\caption{Highlevel overview of the whole system.}
+	\label{fig:overview}
 \end{figure}
 
 \subsection{Evaluation}
-We bench-marked the different systems on the SQuAD dataset \cite{squad}. We sampled 20 with there context and answer (examples can be found in this annex \ref*{ann:experiments}), for each question and context 
-we tested a different embedding and LLM, each response is them evaluated using GPT-3 \cite{gpt3} (a score of +1 is given if the answer is correct 0 otherwise), results are shown in table \ref{tab:benchmark}.
+We bench-marked the different systems on the SQuAD dataset \cite{squad}. We sampled 20 examples from the dataset with their contexts and answers (examples can be found in annex \ref*{ann:experiments}), for each question and context 
+we tested a different embedding model and LLM combination, each response is then evaluated using GPT-3 \cite{gpt3} (a score of +1 is given if the answer is correct 0 otherwise), results are shown in table \ref{tab:benchmark}.
 
 \begin{figure}[htbp]
-  \centering
-  \includegraphics[width=.9\linewidth]{figures/evaluation.png}
-  \caption{Evaluation schema with GPT-3 \cite{gpt3}.}
-  \label{fig:evaluation}
+	\centering
+	\includegraphics[width=.9\linewidth]{figures/evaluation.png}
+	\caption{Evaluation schema with GPT-3 \cite{gpt3}.}
+	\label{fig:evaluation}
 \end{figure}
 
-
-\begin{table}
-    \centering
-    \begin{tabular}{cccc}
-        & & \color{orange}{\textbf{Language model}} & \\
-        \cline{2-4}
-        \color{violet}{\textbf{Embedder}} & \textbf{Vicuna} & \textbf{Falcon} & \textbf{OpenLlama} \\
-        \hline
-        Bert   & \textbf{0.4}  & 0.25 & 0.35 \\
-        MiniLM & 0.35 & 0.25 & 0.3  \\
-        E5     & 0.35 & 0.25 & 0.3  \\
-    \end{tabular}
-    \caption{Benchmark : score of each system when tested on 20 samples from SQuAD \cite{squad} dataset, and evaluated using GPT-3 \cite{gpt3}.}
-    \label{tab:benchmark}
+\begin{table}[h]
+	\centering
+	\begin{tabular}{cccc}
+		                                  &                 & \color{orange}{\textbf{Language model}} &                    \\
+		\cline{2-4}
+		\color{violet}{\textbf{Embedder}} & \textbf{Vicuna} & \textbf{Falcon}                         & \textbf{OpenLlama} \\
+		\hline
+		Bert                              & \textbf{0.4}    & 0.25                                    & 0.35               \\
+		MiniLM                            & 0.35            & 0.25                                    & 0.3                \\
+		E5                                & 0.35            & 0.25                                    & 0.3                \\
+	\end{tabular}
+	\caption{Benchmark : average score of each system when tested on 20 samples from SQuAD \cite{squad} dataset, and evaluated using GPT-3 \cite{gpt3}.}
+	\label{tab:benchmark}
 \end{table}
 
+\subsection{Discussion}
+
 \subsection{Implementation details}
-- general details python, git repos, machine specs.
+
+In this section, we provide general details about the implementation of our benchmarking system. 
+We also describe the specific setup used for our experiments.
 
 \begin{enumerate}
-  \item python version : 3.10.11
-  \item system : Ubuntu 20.04.6 LTS x86\_64
-  \item GPU : 1x NVIDIA GeForce GTX 1080 Ti and 2x NVIDIA GeForce RTX 3060
-  \item RAM : 126GB
+	\item \textbf{Python version:} We implemented the system using Python 3.10.11, which provided us with the necessary language features and libraries for our project.
+	\item \textbf{Operating system:} The implementation was developed and tested on Ubuntu 20.04.6 LTS x86\_64.
+	\item \textbf{Graphics Processing Units (GPUs):} To leverage the power of parallel processing, our setup included a combination of GPUs. We utilized one NVIDIA GeForce GTX 1080 Ti and two NVIDIA GeForce RTX 3060 GPUs for faster inference.
+	\item \textbf{Memory :} The system had access to a substantial amount of RAM, specifically 126GB. This allowed us to load the weights of the different LLMs easily.
 \end{enumerate}
 
-\paragraph*{IR system}
-- splitting.
-- embedding.
-\paragraph*{Language models}
-- LMs (batching).
-\paragraph*{Evaluation}
-- evaluation (sampling from dataset) (how to use gpt-3 decoding).
-\paragraph*{User interface}
-- backend 
+\subsubsection*{IR system details}
+The Information Retrieval (IR) system employed a two-step process for document retrieval:
+
+\begin{enumerate}
+	\item \textbf{Splitting:} We tested different text splitting mechanisms, on the token level with overlap using the tiktoken package, 
+    on the sentence level using a metaheuristic developed by the curators of Europarl \cite{europarl} (pseudo code available on annex \ref{ann:pseudocode}) and on the paragraph level by concatenating multiple sentences (while making sure that the last sentence ends with a dot).
+	
+    \item \textbf{Embedding:} We used a BERT \cite{bert} and E5 \cite{e5} from HuggingFace \cite{huggingface} (bert-base-cased-squad2 and e5-small respectively) and a MiniLM \cite{minilm} model from the SentenceTransformer package \cite{sbert}.
+\end{enumerate}
+
+During the evaluation phase we fix the text splitting to sentence level and the similarity measure to cosine similarity and $k=1$ (the number of retrieved context sentences), to make the evaluation a little more rigorous.  
+
+\subsubsection*{Language models details}
+We employed a batching strategy processing multiple input sequences simultaneously, reducing the overall processing time.
+
+Using the OpenLlama project \cite{openllama} weights, we employed the LlamaForCausalLM model and the LlamaTokenizer from HuggingFace \cite{huggingface} to load and run the model. 
+During generation, a maximum of 30 new tokens were allowed, and the generation temperature was set to 0.0 for deterministic output. 
+
+For Falcon \cite{falcon} we employed the AutoTokenizer and the "text-generation" pipeline from the HuggingFace \cite{huggingface}. 
+During generation, we used a temperature of $3e-4$. The maximum length of generated tokens was set to 30.
+
+For Vicuna \cite{vicuna} we used FastChat \cite{fastchat} implementation.
+We use their implementation for chat input and output as a workaround for batched inference (shown in annex \ref*{ann:vicuna}). 
+The maximum number of new tokens and temperature are 30 and 0.0 respectively 
+
+\subsubsection*{Evaluation details}
+The evaluation of our benchmark involved sampling 20 random samples from the SQuAD \cite{squad} dataset, and using GPT-3 \cite{gpt3} as a scoring model.
+We use LMQL \cite{lmql} programming framework to constrain the evaluation output of the scoring model (shown in annex \ref*{ann:evaluation}). LMQL uses token masking to prevent the generation of tokens that violate the specified constraints. 
+If a constraint cannot be satisfied, the corresponding branch of generation is pruned, and the model continues generating in the remaining valid branches. This helps improve efficiency and constrain the model to output only necessary tokens 
+(in our case it's 1 or 0).
+
+\subsubsection*{User interface}
+- backend
 - frontend
+
+\section{Conclusion}
 
 % % Bibliography
 \twocolumn
 \bibliographystyle{plain}
 \bibliography{sample_references}
 \clearpage
-
-
-
-
-
-
-
-
 
 % //////////////////////////////////////////////////////////////////////////////
 % //////////////// Annexes /////////////////////////////////////////////////////
@@ -593,7 +766,7 @@ we tested a different embedding and LLM, each response is them evaluated using G
 \section{Annexes}
 
 \subsection{Code}
-\subsubsection*{Initializing the different LMs}
+\subsubsection{initializing the different LMs}
 \begin{lstlisting}[language=Python]
 from abc import ABC, abstractmethod
 
@@ -673,9 +846,11 @@ class Falcon(LM):
         )
         outputs = [seq[0]["generated_text"] for seq in sequences]
         return outputs
+\end{lstlisting}
 
-
-# Vicuna.py
+\subsubsection{vicuna workaround}
+\label{ann:vicuna}
+\begin{lstlisting}[language=Python]
 import torch
 from fastchat.model.chatglm_model import chatglm_generate_stream
 from fastchat.model.model_adapter import get_conversation_template, load_model
@@ -807,7 +982,7 @@ class Vicuna(LM):
         return outputs
 \end{lstlisting}
 
-\subsubsection*{Initializing the different embedding models}
+\subsubsection{initializing the different embedding models}
 \begin{lstlisting}[language=Python]
   from abc import ABC, abstractmethod
 
@@ -901,7 +1076,8 @@ class Vicuna(LM):
           return self.embed(["passage :" + text for text in texts])
 \end{lstlisting}
 
-\subsubsection*{Evaluation using GPT-3 \cite{gpt3} and the lmql library \cite{lmql}}
+\subsubsection{Evaluation using GPT-3 \cite{gpt3} with LMQL framework \cite{lmql}} 
+\label{ann:evaluation}
 \begin{lstlisting}[language=Python]
 import os
 
@@ -928,7 +1104,7 @@ async def evaluate_gpt3(prediction: str, ground_truth: str):
     '''  
 \end{lstlisting}
 
-\subsubsection*{Index construction}
+\subsubsection{Index construction}
 \begin{lstlisting}[language=python]
 from src.embedding import Embedder
 from src.text_splitter import Splitter
@@ -969,5 +1145,85 @@ class Index:
     def load_index(self, path: str) -> list[tuple]:
         return read_pickle(path=path)
 \end{lstlisting}
-\subsection{Experiments}\label{ann:experiments}
+
+\subsubsection{Sentence splitting heuristic \cite{europarl} pseudocode}
+\label{ann:pseudocode}
+\begin{lstlisting}
+    function splitIntoSentences(text):
+    sentences = []
+    words = splitTextIntoWords(text)
+    currentSentence = ""
+
+    for i = 0 to length(words) - 1:
+        word = words[i]
+        nextWord = words[i + 1] if i + 1 < length(words) else ""
+
+        if isEndOfSentence(word, nextWord):
+            currentSentence += word
+            sentences.append(currentSentence)
+            currentSentence = ""
+        else:
+            currentSentence += word + " "
+
+    return sentences
+
+function isEndOfSentence(word, nextWord):
+    if word ends with period, question mark, or exclamation mark:
+        if nextWord starts with uppercase letter or sentence starter punctuation:
+            return true
+
+    if word ends with multiple consecutive dots:
+        if nextWord starts with uppercase letter or sentence starter punctuation:
+            return true
+
+    if word ends with punctuation inside quotes or parentheses:
+        if nextWord starts with possible sentence starter punctuation and uppercase letter:
+            return true
+
+    if isHonorific(word) and nextWord is empty:
+        return false
+
+    if isUppercaseAcronym(word):
+        return false
+
+    if word ends with period:
+        if nextWord starts with uppercase letter or sentence starter punctuation:
+            return true
+
+    return false
+
+function isHonorific(word):
+    if word is a known honorific:
+        return true
+    return false
+
+function isUppercaseAcronym(word):
+    if word consists of uppercase letters and ends with period:
+        return true
+    return false
+
+function splitTextIntoWords(text):
+    words = []
+    currentWord = ""
+    
+    for character in text:
+        if character is whitespace:
+            if currentWord is not empty:
+                words.append(currentWord)
+                currentWord = ""
+        else:
+            currentWord += character
+    
+    if currentWord is not empty:
+        words.append(currentWord)
+    
+    return words
+\end{lstlisting}
+
+\subsection{Experiments}
+\label{ann:experiments}
+\subsubsection*{Results sample}
+
+\begin{lstlisting}[language=Python]
+\end{lstlisting}
 \end{document}
