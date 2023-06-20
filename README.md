@@ -1,18 +1,25 @@
 # document-based-question-answering
 
+Results of the benchmark can be found at `results/benchmarks/squad.json` and `results/summary/squad.json`
+
 # System specs
+
 - python version : `3.10.11`
 - system : `Ubuntu 20.04.6 LTS x86_64`
 - GPU : `1x NVIDIA GeForce GTX 1080 Ti and 2x NVIDIA GeForce RTX 3060`
 - RAM : `126GB`
 
 # Build
+
 - create a virtual environment
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
+
 - install the requirements
+
 ```bash
 pip install -r requirements.txt
 pip install -e .
@@ -21,6 +28,7 @@ pip install -e .
 # Other requirements
 
 ## Llama 7B
+
 we are using [OpenLlama](https://github.com/openlm-research/open_llama) and open reproduction of Llama, weights for the 7B model are available on [here](https://huggingface.co/openlm-research/open_llama_7b).
 
 ```bash
@@ -48,31 +56,14 @@ python3 -m fastchat.model.apply_delta \
 
 ## Falcon 7B
 
-
-## datasets
-
-- [Google natural questions](https://ai.google.com/research/NaturalQuestions/download) (we are using the dev set)
-
-```bash
-gzip -d dataset/v1.0-simplified_nq-dev-all.jsonl.gz 
-```
-sample a smaller dataset
-
-```bash
-python scripts/sample_qa.py 
-```
+see [tiiuae/falcon-7b](https://huggingface.co/tiiuae/falcon-7b) for more details.
 
 ## Test
+
 - you can test if the models are working by running :
+
 ```bash
 python scripts/run_llama.py
 python scripts/run_vicuna.py
 python scripts/fly_falcon.py
 ```
-
-
-# Notes
-
-- temperature of vicuna is set to 0
-- temperature of falcon is set to 3e-4
-- temperature of llama is set to 0
