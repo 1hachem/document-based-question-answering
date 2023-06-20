@@ -100,6 +100,24 @@
 \newpage
 
 \section{General introduction}
+Creating value in today's market requires more than just providing off-the-shelf solutions or boilerplate answers. 
+In the AI consulting industry, the game has been elevated to new heights with the emergence of LLMs (Large Language Models) and other fundamental models. 
+
+Now, creating value demands bespoke AI solutions that are tailored to specific needs, 
+going beyond simple predictions and recommendations.
+
+BIGmama is a French registered startup with an Algerian extension, 
+specializing in producing AI solutions for it's clients.
+
+BIGmama's mission is to democratize access to bespoke AI applications industrially. 
+With its unique work methodology and principles, embedded intrinsically in its software, BIGmama today aim
+to automatize the production of AI solutions, starting from client interactions facilitated by a chatbot, 
+all the way to the design and implementation of the generated solution.
+
+One important aspect in this automatic pipeline is the ability to transform expert's/client's knowledge (most often available in written documentation) 
+into digestible resources for AI systems.  
+
+One way to tackle this challenge is by creating a system that could answer questions from a given document. 
 For this BIGmama confined the development of a document-based question answering model to us.
 
 \begin{figure}[h]
@@ -109,6 +127,12 @@ For this BIGmama confined the development of a document-based question answering
   \caption{General structure of this document.}
     \label{fig:plan}
 \end{figure}
+
+In this document we will dive deeper into the state of play of the industry and the host company, 
+we will further detail and explain the task at hand, its state of the art and finally we will further discuss our solution, implementation details and 
+results.
+
+\newpage
 
 \section{State of play}
 \subsection{Introduction}
@@ -270,9 +294,9 @@ DBQA systems typically involve a two stages process :
 \end{enumerate}  
 
 \subsection{Conclusion}
-In this paper we will dive deeper into the different frameworks, models and techniques used in DBQA systems (and similar QA tasks). 
-We experimented further with different DBQA retriever-generator settings, we prepared a small benchmark for few open-source LLMs used (in combinations) 
-with context retrieval systems.
+In this document we will dive deeper into the different frameworks, models and techniques used in DBQA systems (and similar QA tasks). 
+We experimented further with different DBQA retriever-generator settings, we prepared a small benchmark for few open-source LLMs used (in combination) 
+with context retrieval systems, more on that in the the following sections. 
 
 \clearpage
 \section{State of the art}
@@ -722,6 +746,17 @@ we tested a different embedding model and LLM combination, each response is then
 \end{table}
 
 \subsection{Discussion}
+For this particular setup Vicuna \cite{vicuna} in combination with Bert \cite{bert} embedding outperform the competition.
+However we are unaware whether the sampled evaluation data from SQuAD \cite{squad} was used for training or fine-tuning any of the used models, 
+further tests need to be conducted for more rigorous evaluation. 
+
+We notice that the choice of the LLM is crucial, since we see no tangible difference in the scores along the columns in table \ref{tab:benchmark}.
+However If the retrieval model successfully extracts the right context to answer the question, all the tested LLMs show to be capable of reformulating the correct answer 
+(except for raw models: OpenLlama and Falcon, which keep on generating similar pattern for the input after answering, examples shown in annex \ref{ann:experiments}).
+
+Using GPT3 \cite{gpt3} as a scoring model was a bad option, multiple evaluations were incorrect, a better evaluation method must be incorporated.
+Future work will include experimenting with more robust IR systems, a more restrictive setup to restrain the LLMs of hallucinating unwanted or non-context based output, 
+and more rigorous evaluation on never-seen data.
 
 \subsection{Implementation details}
 
@@ -766,7 +801,25 @@ We use LMQL \cite{lmql} programming framework to constrain the evaluation output
 If a constraint cannot be satisfied, the corresponding branch of generation is pruned, and the model continues generating in the remaining valid branches. This helps improve efficiency and constrain the model to output only necessary tokens 
 (in our case it's 1 or 0).
 
+\newpage
 \section{Conclusion}
+Our implementation utilized a retriever-generator approach for Document-based Question Answering (DBQA). 
+We conducted experiments with various combinations of embedding models and Language Models (LMs), as well as different similarity measures and text splitting strategies. Our focus was on open-source models and LMs that can run on-premise, ensuring model and data sovereignty.
+We employed an information retrieval (IR) system based on neural embeddings for context selection. 
+Our implementation required substantial computational resources, and we performed inferences on a multi-GPU machine.
+We benchmarked our systems using a sample from the SQuAD dataset and evaluated them using GPT-3 \cite{gpt3} as a scoring model. The results showed that the combination of Vicuna \cite{vicuna} and Bert \cite{bert} embedding outperformed other systems. 
+However, further tests and evaluations are necessary to validate these findings.
+We observed that the choice of LM was crucial, while the embeddings showed no significant difference in scores. All tested LMs, except for the raw models, demonstrated the capability to generate correct answers when the retrieval model extracted the right context. 
+However, using GPT-3 as a scoring model proved to be a suboptimal choice, and better evaluation methods should be incorporated in future work.
+Our future work will involve exploring more robust IR systems, imposing stricter constraints on LMs to prevent unwanted output, and conducting more rigorous evaluations on unseen data.
+
+\section{Acknowledgement}
+We would like to express our sincere gratitude to BIGmama for their invaluable support in providing us with the computational setup required for this project.
+
+I would like to express my sincere gratitude and heartfelt appreciation to my teachers at the National Polytechnic School of Algeria, 
+and to the whole Department of Industrial Engineering, for their help and support throughout my years of study.
+
+Big shout-outs and virtual high-fives to all the brilliant minds out there who are passionately working on open-source projects. You rock!
 
 % % Bibliography
 \twocolumn
@@ -1239,88 +1292,138 @@ function splitTextIntoWords(text):
 \subsection{Experiments}
 \label{ann:experiments}
 \subsubsection*{Results sample}
+\subsection{Experiments}
+\label{ann:experiments}
+\subsubsection*{Results sample}
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{|p{3cm}|p{7cm}|}
+    \begin{tabular}{|p{3cm} p{7cm} p{2cm}|}
     \hline
-    Question & What path does a ball thrown up and down in a moving vehicle take when seen by an outside observer? \\
+        &  & evaluation \\
     \hline
-    Context & A person can throw a ball straight up in the air and catch it as it falls down without worrying about applying a force in the direction the vehicle is moving. \\
+    Question & What path does a ball thrown up and down in a moving vehicle take when seen by an outside observer? & \\
     \hline
-    True Answer & parabolic \\
+    Retrieved context (Bert) & A person can throw a ball straight up in the air and catch it as it falls down without worrying about applying a force in the direction the vehicle is moving. &  \\
     \hline
-    Vicuna Answer & When seen by an outside observer, a ball thrown up and down in a moving vehicle takes a cur \\
+    True Answer & parabolic & \\
     \hline
-    Llama Answer & The ball is thrown up and falls down.\newline \newline A: The ball is thrown up and falls down.\newline \newline A: The ball is thrown \\
+    Vicuna Answer & When seen by an outside observer, a ball thrown up and down in a moving vehicle takes a cur & 0 \\
     \hline
-    Falcon Answer & The ball will move in a straight line.\newline Question: What is the direction of the ball's motion when seen by an outside observer? \\
+    Llama Answer & The ball is thrown up and falls down.\newline \newline A: The ball is thrown up and falls down.\newline \newline A: The ball is thrown & 0\\
+    \hline
+    Falcon Answer & The ball will move in a straight line.\newline Question: What is the direction of the ball's motion when seen by an outside observer? & 0\\
     \hline
     \end{tabular}
 \end{table}
-    
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{|p{3cm}|p{7cm}|}
+    \begin{tabular}{|p{3cm} p{7cm} p{2cm}|}
     \hline
-    Question & A small fraction of the cold water flow from Lake Constance goes to what other lake? \\
+    & & Evaluation \\
     \hline
-    Context & A small fraction of the flow is diverted off the island of Mainau into Lake Überlingen. \\
+    Question & When was the agreement to acquire ABC approved by UPT's board? & \\
     \hline
-    True Answer & Lake Überlingen \\
+    Retrieved context (Bert) & On June 6, 1951, the tentative agreement was approved by UPT's board of directors. & \\
     \hline
-    Vicuna Answer & A small fraction of the cold water flow from Lake Constance goes to Lake Überlingen. \\
+    True Answer & June 6, 1951 & \\
     \hline
-    Llama Answer & Lake Überlingen \\
+    Vicuna Answer & The agreement to acquire ABC was approved by UPT's board of directors on June & 0 \\
     \hline
-    Falcon Answer & Lake Überlingen 
-    Question: What is the name of the island in Lake Constance? 
-    Answer: Mainau
-    Question: What is the name of... \\
+    Llama Answer & On June 6, 1951, the tentative agreement was approved by UPT's board of directors.\newline Question: & 0\\
+    \hline
+    Falcon Answer & The tentative agreement was approved by UPT's board of directors on June 6, 1951.\newline Question: When was the agreement to & 1\\
     \hline
     \end{tabular}
-    \end{table}
+\end{table}
 
-    \begin{table}[htbp]
-        \centering
-        \begin{tabular}{|p{3cm}|p{7cm}|}
-        \hline
-        Question & The first episode of Doctor Who premiered the day after what famous event in history? \\
-        \hline
-        Context & Premiering the day after the assassination of John F. Kennedy, the first episode of Doctor Who was repeated with the second episode the following week. \\
-        \hline
-        True Answer & The assassination of John F. Kennedy \\
-        \hline
-        Vicuna Answer & The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy. \\
-        \hline
-        Llama Answer & The assassination of John F. Kennedy \\
-        \hline
-        Falcon Answer & The first episode of Doctor Who premiered the day after the assassination of John F. Kennedy.
-        The first episode of Doctor Who premiered on November 23... \\
-        \hline
-        \end{tabular}
-    \end{table}
-    
-    \begin{table}[htbp]
-        \centering
-        \begin{tabular}{|p{3cm}|p{7cm}|}
-        \hline
-        \textbf{Row} & \textbf{Value} \\
-        \hline
-        Question & The merger between ITT and ABC was suspended after a complaint was filed by whom in July 1967? \\
-        \hline
-        Context & The merger was suspended, and a complaint was filed by the Department of Justice in July 1967, with ITT going to trial in October 1967; the merger was officially canceled after the trial's conclusion on January 1, 1968. \\
-        \hline
-        True Answer & Department of Justice \\
-        \hline
-        Vicuna Answer & The merger between ITT and ABC was suspended after a complaint was filed by the Department of Justice. \\
-        \hline
-        Llama Answer & The merger between ITT and ABC was suspended after a complaint was filed by the Department of Justice in July 1967, with ITT... \\
-        \hline
-        Falcon Answer & The merger was suspended, and a complaint was filed by the Department of Justice in July 1967.The merger between ITT and ABC was... \\
-        \hline
-        \end{tabular}
-        \end{table}
+
+Here is the formatted output in tabular form:
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|p{3cm} p{7cm} p{2cm}|}
+\hline
+& & Evaluation \\
+\hline
+Question & What path does a ball thrown up and down in a moving vehicle take when seen by an outside observer? & \\
+\hline
+Retrieved context (MiniLM) & This is true even though another person who is observing the moving vehicle pass by also observes the ball follow a curving parabolic path in the same direction as the motion of the vehicle. & \\
+\hline
+True Answer & parabolic & \\
+\hline
+Vicuna Answer & When seen by an outside observer, a ball thrown up and down in a moving vehicle takes a cur & 0 \\
+\hline
+Llama Answer & The ball follows a parabolic path.\newline \newline A: The ball follows a parabolic path. 
+The ball follows a parabolic path. & 1 \\
+\hline
+Falcon Answer & The ball follows a curving parabolic path in the same direction as the motion of the vehicle.\newline \newline Answer: The ball follows a curving & 1 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|p{3cm} p{7cm} p{2cm}|}
+    \hline
+    & & Evaluation \\
+    \hline
+    Question & Where did Kublai build his administration's strength? & \\
+    \hline
+    Retrieved context (MiniLM) & After strengthening his government in northern China, Kublai pursued an expansionist policy in line with the tradition of Mongol and Chinese imperialism. & \\
+    \hline
+    True Answer & northern China & \\
+    \hline
+    Vicuna Answer & Kublai built the strength of his administration in northern China. & 1 \\
+    \hline
+    Llama Answer & Kublai built his administration's strength in northern China.\newline Question: What was the main reason for Kublai's expansionist & 0 \\
+    \hline
+    Falcon Answer & Kublai built his administration's strength in the north.\newline Question: What was the result of Kublai's expansionist policy? & 0 \\
+    \hline
+    \end{tabular}
+\end{table}
         
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|p{3cm} p{7cm} p{2cm}|}
+    \hline
+    & & Evaluation \\
+    \hline
+    Question & When were the French wars of religion? & \\
+    \hline
+    Retrieved context (E5) & The French Wars of Religion in the 16th century and French Revolution in the 18th successively destroyed much of what existed in the way of the architectural and artistic remnant of this Norman creativity. & \\
+    \hline
+    True Answer & 16th century & \\
+    \hline
+    Vicuna Answer & The French Wars of Religion were a series of conflicts that took place in France between the Protestant H & 0 \\
+    \hline
+    Llama Answer & The French wars of religion were a series of conflicts in 16th century France between Roman Catholics and Protestants.\newline Question: What was & 1 \\
+    \hline
+    Falcon Answer & The French Wars of Religion were a series of religious wars fought in France between the Catholic League and the Huguenots from 1562 to 159 & 0 \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|p{3cm} p{7cm} p{2cm}|}
+    \hline
+    & & Evaluation \\
+    \hline
+    Question & Where did the Rhine occupy during the Holocene? & \\
+    \hline
+    Retrieved context (E5) & At the beginning of the Holocene (~11,700 years ago), the Rhine occupied its Late-Glacial valley. & \\
+    \hline
+    True Answer & Late-Glacial valley & \\
+    \hline
+    Vicuna Answer & The Rhine occupied its Late-Glacial valley during the Holocene. & 1 \\
+    \hline
+    Llama Answer & The Rhine occupied its Late-Glacial valley.\newline Question: What is the Late-Glacial valley?\newline Answer: The & 1 \\
+    \hline
+    Falcon Answer & The Rhine occupied its Late-Glacial valley.\newline Question: What is the Holocene?\newline Answer: The Holocene is the current geological & 0 \\
+    \hline
+    \end{tabular}
+\end{table}
 
 \begin{lstlisting}[language=Python]
 \end{lstlisting}
