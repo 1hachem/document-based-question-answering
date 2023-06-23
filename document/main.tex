@@ -219,7 +219,7 @@ approaches in AI are not always the best way to solve \textit{every} problem.
 \subsubsection{Hybridization}
 The future of AI lies in what is commonly referred to today as hybrid AI. 
 This is a set of approaches and methodologies aiming at combining the potential of models with purely human knowledge. 
-This hybridization allows BIGmama to put humans at the heart of technological development and to produce tools that are more efficient, easier to maintain, 
+This hybridization allows BIGmama to put humans at the heart of technological development and to produce tools that are more efficient, easier to maintain and 
 explain and that are far less expensive.
 
 \subsection{Software as a service (SaaS)}
@@ -253,7 +253,7 @@ an executable AI prototype solution fully automatically.
 
 \paragraph{Enhancement of the prototype}
 The last step involves further customizing and enhancing the prototype to the exact needs of the client.
-Following this framework Building tailor-made AI solution will become cheaper faster and accessible to everyone, requiring minimal (to none) technical intervention.
+Following this framework, building tailor-made AI solution will become cheaper faster and accessible to everyone, requiring minimal (to none) technical intervention.
 
 
 \begin{figure}[h]
@@ -273,13 +273,14 @@ At BIGmama we experimented with various techniques and methods for representing 
 first approaches involved working with ontologies and knowledge graphs :
 
 \begin{enumerate}
-	\item Ontologies: Ontologies provide a structured way to represent knowledge by defining concepts, relationships, and properties within a specific domain. They establish a common vocabulary and enable reasoning about the knowledge. 
+	\item Ontologies provide a structured way to represent knowledge by defining concepts, relationships, and properties within a specific domain. They establish a common vocabulary and enable reasoning about the knowledge. 
 	      Ontologies are often represented using ontology languages like RDF (Resource Description Framework) or OWL (Web Ontology Language).
-	\item Knowledge graphs: Knowledge graphs organize knowledge as a network of interconnected nodes representing entities, concepts, or facts. 
+	\item Knowledge graphs organize knowledge as a network of interconnected nodes representing entities, concepts, or facts. 
 	      These graphs capture not only the relationships between entities but also their attributes and contextual information. Knowledge graphs can be built using graph databases or triple stores.
 \end{enumerate}
 
-However, with the last advances in language modeling and information retrieval systems, document-based question answering become a more appealing option.  
+However, these methods require expertise in the targeted field, and demand careful curation of knowledge, making it an un-scalable option. With the last advances in language modeling and information retrieval systems, 
+document-based question answering become a more appealing option for knowledge representation.  
 
 
 \subsubsection{Document-based question answering}
@@ -311,17 +312,16 @@ These embeddings can be created using neural or statistical approaches.
 
 Transformers, introduced by "attention is all you need" \cite{attention}, are a type of deep learning model that revolutionized NLP. 
 Transformers utilize attention mechanisms, which allow the model to attend to different parts of the input sequence when processing each element. 
-The encoder-decoder architecture extends the transformer model to handle tasks with varying input and output sequence lengths.
+The transformer model can handle tasks with varying input and output sequence lengths and allow to parallelize the required computation making it an attractive option 
+for today's hardware.
 
 As we will see NLP plays a crucial role in tackling the DBQA task, but first we will dive further into the state-of-the-art of the different embedding models 
-and transformer architectures available in the litterateur. We will further explore the different frameworks used to solve similar tasks to DBQA.  
-
-
-
+and transformer architectures available in the litterateur. We will further explore the different frameworks used to solve similar tasks to DBQA.
 
 \subsubsection{Transformers}
 
-Transformers are a type of deep learning model that have revolutionized natural language processing (NLP) tasks. They were introduced by \cite{attention} and have since become the state-of-the-art approach for various NLP applications.
+Transformers are a type of deep learning model that have revolutionized natural language processing (NLP) tasks. 
+They were introduced by \cite{attention} and have since become the state-of-the-art approach for various NLP applications.
 
 \textbf{Attention Mechanism:}
 
@@ -383,7 +383,7 @@ It is widely used in various applications such as machine translation, text summ
 
 
 \subsubsection{Embeddings}
-A word embedding is a technique used in NLP to represent words as dense vectors in a high-dimensional space (an embedding). It aims to capture the semantic and syntactic relationships between words, enabling algorithms to process language more effectively.
+A word embedding is a technique used in NLP to represent words as dense vectors in a high-dimensional space. It aims to capture the semantic and syntactic relationships between words, enabling algorithms to process language more effectively.
 
 Word embeddings can be created using two main approaches (or a combination of both): neural and statistical. 
 Neural approaches, use neural networks to learn word representations by capturing semantic and syntactic relationships. Statistical approaches, rely on statistical features of words and their occurrences.
@@ -511,10 +511,11 @@ which serve as valuable resources for this project.
 The authors of \cite{llama} present LLaMA, a collection of foundation language models with parameters ranging from 7 billion to 65 billion. 
 They demonstrate that it is possible to train state-of-the-art models using publicly available datasets alone, without relying on proprietary or inaccessible data. 
 In particular, LLaMA-13B surpasses the performance of GPT-3 (175B) \cite{gpt3} on most benchmarks, and LLaMA-65B is on par with other top models like Chinchilla-70B \cite{chinchilla} and PaLM-540B \cite{palm}. 
-By making open-sourcing the LLaMA architecture and training code and by making the weights available for researchers, plenty of other models appeared as a result of fine-tuning the original LLaMA models on various tasks and datasets, 
+By open-sourcing LLaMA's architecture and training code and publishing the weights for research purposes, plenty of other models appeared as a result of fine-tuning the original LLaMA models on various tasks and datasets, 
 these fine-tuned models include Alpaca \cite{alpaca} and Vicuna \cite{vicuna}.     
 
-\paragraph*{Open-LLaMA} \cite{openllama} provides a totally open-source replication (weights and code, no research-only restriction) of the original LLaMA \cite{llama} models and which surprisingly in some cases outperforms the original models according to their benchmark \cite{openllama}.
+\paragraph*{Open-LLaMA} \cite{openllama} provides a totally open-source replication (weights and code, no research-only restriction) of the original LLaMA \cite{llama} models 
+and which in some cases outperforms the original models according to their benchmark \cite{openllama}.
 
 Open-LLaMA is a permissively licensed open source reproduction of LLaMA \cite{llama} 7B and 13B trained on the RedPajama \cite{redpajama} dataset. 
 
@@ -584,7 +585,8 @@ Nevertheless approaches in ODQA are applicable for DBQA.
 
 \subsection{Methods for document-based question answering}
 \subsubsection{Open-book QA}
-Open-book models in the field of Open-Domain Question Answering (ODQA) initially retrieve relevant documents then either extract or generate answers based on the information contained in the retrieved documents. We can distinguish mainly two approaches to tackle the ODQA problem :
+Open-book models in the field of Open-Domain Question Answering (ODQA) initially retrieve relevant documents then either extract or generate answers based on the information contained in the retrieved documents. \\
+We can distinguish mainly two approaches to tackle the ODQA problem :
 
 \begin{enumerate}
 	\item Retriever-reader : this model works toward finding the related context in the documentation than process the retrieved context to \textbf{extract} the start/end positions of an answer. The output of the model is the selected context and the identified span of the answer in the context. 
@@ -594,7 +596,7 @@ Open-book models in the field of Open-Domain Question Answering (ODQA) initially
 A famous model following the retriever-reader approach is "Dense Passage Retrieval" (DPR) \cite{dpr}. DPR follows a pipeline approach, where documents are retrieved using dense embeddings. 
 These retrieved documents are then passed to a conventional reader-re-ranker, which extracts specific spans of text as answers.
 
-another example of a retriever-generator model is "Retrieval-Augmented Generation" \cite{rag} which is a seq2seq model that jointly learns to retrieve and generate answers. 
+Another example of a retriever-generator model is "Retrieval-Augmented Generation" \cite{rag} which is a seq2seq model that jointly learns to retrieve and generate answers. 
 It utilizes dense retrieval and BART \cite{bart} for this purpose.
 
 
@@ -680,6 +682,7 @@ Another example of neural reader models is found in BERTserini \cite{BERTserini}
 In our Implementation we chose a retriever-generator approach, we experimented with different combinations of embedding and Language models, as well as different similarity measures and text splitting strategies.
 
 We evaluated the different systems using a sample from the SQuAD \cite{squad} dataset while using GPT-3 \cite{gpt3} as a scoring model (more about that in the sections below).  
+This setup concerns the following LLMs : OpenLLaMA 7B \cite{openllama}, Vicuna 7B \cite{vicuna} and Falcon 7B \cite{falcon} and the following embedding models : Bert \cite{bert}, MiniLM \cite{minilm} and E5 \cite{e5}.
 
 \paragraph*{Similar work} LlamaIndex \cite{llamaindex} tested out few indexing methods (embeddings, LLMs and retrieval systems) following a similar framework to ours. 
 However, their focus was on OpenAI proprietary language models (GPT-3 and GPT-4) \cite{gpt3, gpt4}. Our focus in this project 
@@ -750,7 +753,9 @@ For this particular setup Vicuna \cite{vicuna} in combination with Bert \cite{be
 However, we are unaware whether the sampled evaluation data from SQuAD \cite{squad} was used for training or fine-tuning any of the used models, 
 further tests need to be conducted for more rigorous evaluation. 
 
-We notice that the choice of the LLM is crucial, since we see no tangible difference in the scores along the columns in table \ref{tab:benchmark}.
+We notice that the choice of the LLM is important, while the choice of embedding model shows no substantial difference 
+(we see no tangible difference in the scores along the columns in table \ref{tab:benchmark}).
+
 However, If the retrieval model successfully extracts the right context to answer the question, all the tested LLMs show to be capable of reformulating the correct answer 
 (except for raw models: OpenLlama and Falcon, which keep on generating similar pattern for the input after answering, examples shown in annex \ref{ann:experiments}).
 
@@ -780,7 +785,7 @@ The Information Retrieval (IR) system employed a two-step process for document r
     \item \textbf{Embedding:} We used a BERT \cite{bert} and E5 \cite{e5} from HuggingFace \cite{huggingface} (bert-base-cased-squad2 and e5-small respectively) and a MiniLM \cite{minilm} model from the SentenceTransformer package \cite{sbert}.
 \end{enumerate}
 
-During the evaluation phase we fix the text splitting to sentence level and the similarity measure to cosine similarity and $k=1$ (the number of retrieved context sentences), to make the evaluation a little more rigorous.  
+During the evaluation phase we fix the text splitting to sentence level, the similarity measure to cosine similarity and $k=1$ (the number of retrieved context sentences), to make the evaluation a little more rigorous.  
 
 \subsubsection*{Language models details}
 We employed a batching strategy processing multiple input sequences simultaneously, reducing the overall processing time.
@@ -809,12 +814,14 @@ We employed an information retrieval (IR) system based on neural embeddings for 
 Our implementation required substantial computational resources, and we performed inferences on a multi-GPU machine.
 We benchmarked our systems using a sample from the SQuAD dataset and evaluated them using GPT-3 \cite{gpt3} as a scoring model. The results showed that the combination of Vicuna \cite{vicuna} and Bert \cite{bert} embedding outperformed other systems. 
 However, further tests and evaluations are necessary to validate these findings.
-We observed that the choice of LM was crucial, while the embeddings showed no significant difference in scores. All tested LMs, except for the raw models, demonstrated the capability to generate correct answers when the retrieval model extracted the right context. 
+We observed that the choice of LM is important, while the embeddings showed no significant difference in scores. All tested LMs demonstrated the capability to generate correct answers when the retrieval model extracted the right context. 
 However, using GPT-3 as a scoring model proved to be a suboptimal choice, and better evaluation methods should be incorporated in future work.
 Our future work will involve exploring more robust IR systems, imposing stricter constraints on LMs to prevent unwanted output, and conducting more rigorous evaluations on unseen data.
 
 \section{Acknowledgement}
-We would like to express our sincere gratitude to BIGmama for their invaluable support in providing us with the computational setup required for this project.
+Allhmdullh.
+
+I would like to express my sincere gratitude to BIGmama for their invaluable support in providing us with the computational setup required for this project.
 
 I would like to express my sincere gratitude and heartfelt appreciation to my teachers at the National Polytechnic School of Algeria, 
 and to the whole Department of Industrial Engineering, for their help and support throughout my years of study.
@@ -1289,9 +1296,6 @@ function splitTextIntoWords(text):
     return words
 \end{lstlisting}
 
-\subsection{Experiments}
-\label{ann:experiments}
-\subsubsection*{Results sample}
 \subsection{Experiments}
 \label{ann:experiments}
 \subsubsection*{Results sample}
