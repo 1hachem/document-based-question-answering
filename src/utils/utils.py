@@ -1,5 +1,6 @@
 import json
 import pickle
+import PyPDF2
 
 
 def dump_pickle(somthing: any, path: str) -> None:
@@ -40,3 +41,11 @@ def read_jsonl(file_path):
             json_obj = json.loads(line.strip())
             data_list.append(json_obj)
     return data_list
+
+
+def read_pdf(file):
+    pdf_reader = PyPDF2.PdfReader(file)
+    text = ""
+    for page in pdf_reader.pages:
+        text += page.extract_text()
+    return text
