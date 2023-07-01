@@ -1,27 +1,31 @@
-from src.embedding import Bert, MiniLM
 from src.index import Index
-from src.lm import GPT2, GPTJ
 from src.similarity_measure import CosineSimilarity
-from src.text_splitter import SentenceSplitter, TokenSplitter
+from src.text_splitter import SentenceSplitter
 
 
-class simple_index:
-    def __init__(self) -> None:
+class SimpleIndex:
+    def __init__(self, embedding, llm) -> None:
         self.splitter = SentenceSplitter()
-        self.embedder = Bert()
-        self.measure = CosineSimilarity(k=2)
-        self.llm = GPTJ()
+        self.embedder = embedding()
+        self.measure = CosineSimilarity(k=10)
+        self.llm = llm()
+        self.indexed_context = None
 
-    def __call__(self, context: str, question: str) -> str:
+    def index_context(self, context: str):
         index = Index(
             embedder=self.embedder,
             splitter=self.splitter,
         )
-
         indexed_context = index(context)
+        return indexed_context
 
+    def __call__(self, context: str, question: str) -> str:
         query_emb = self.embedder.embed([question])[0]
-        candidates = self.measure.return_top(query_emb, indexed_context)
+        if self.indexed_context:
+            candidates = self.measure.return_top(query_emb, self.indexed_context)
+        else:
+            self.indexed_context = self.index_context(context)
+            candidates = self.measure.return_top(query_emb, self.indexed_context)
 
         print(candidates)
 
@@ -31,4 +35,4 @@ class simple_index:
         answer this question : {question}
         answer :"""
 
-        return self.llm(prompt)
+        return self.llm([prompt])[0]

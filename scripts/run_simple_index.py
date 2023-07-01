@@ -1,4 +1,7 @@
-from src.models.simple_index import simple_index
+from src.models.simple_index import SimpleIndex
+from src.lm import Llama, Falcon, GPT3
+from src.vicuna import Vicuna
+from src.embedding import Bert, E5, MiniLM
 
 if __name__ == "__main__":
     document = """
@@ -18,7 +21,10 @@ if __name__ == "__main__":
     """
     question = "where did emily live ?"
 
-    index = simple_index()
+    index = SimpleIndex(Bert, GPT3)
+    answer = index(context=document, question=question)
+
+    question = "who is emily"
     answer = index(context=document, question=question)
 
     print(answer)
