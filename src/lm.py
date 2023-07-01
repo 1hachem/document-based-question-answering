@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+import os
+import openai
 import dotenv
 
 dotenv.load_dotenv()
@@ -32,7 +34,7 @@ class GPT2(LM):
         self.generator = pipeline("text-generation", model=self.model_name)
         sequences = self.generator(
             requests,
-            max_new_tokens=30,
+            max_new_tokens=15,
             num_return_sequences=1,
             return_full_text=False,
             stop_sequence=stop_sequence,
@@ -58,7 +60,7 @@ class Llama(LM):
             input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
             generation_output = self.model.generate(
                 input_ids=input_ids,
-                max_new_tokens=30,
+                max_new_tokens=15,
                 temperature=0.0,
             )
             output = self.tokenizer.decode(
@@ -87,7 +89,7 @@ class GPTJ(LM):
             device=self.device,
         )
         sequences = pipeline_(
-            requests, max_new_tokens=30, num_return_sequences=1, return_full_text=False
+            requests, max_new_tokens=15, num_return_sequences=1, return_full_text=False
         )
         outputs = [seq[0]["generated_text"] for seq in sequences]
         return outputs
@@ -112,7 +114,7 @@ class Falcon(LM):
         )
         sequences = pipeline_(
             requests,
-            max_new_tokens=30,
+            max_new_tokens=15,
             do_sample=True,
             top_k=10,
             temperature=3e-4,
@@ -122,6 +124,24 @@ class Falcon(LM):
         )
         outputs = [seq[0]["generated_text"] for seq in sequences]
         return outputs
+
+
+class GPT3(LM):
+    def __init__(self) -> None:
+        super().__init__()
+        openai.api_key = os.getenv("OPENAI_API_KEY")
+
+    def __call__(self, prompt: list[str]) -> list[str]:
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt[0],
+            temperature=0.9,
+            max_tokens=100,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0,
+        )
+        return [response.choices[0].text]
 
 
 if __name__ == "__main__":
