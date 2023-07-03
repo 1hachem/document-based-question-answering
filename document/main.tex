@@ -89,7 +89,7 @@
 \noindent
 {\centering 
 {\bfseries \large Hachem \textsc{BETROUNI}\\[0.2cm]}
-under the supervison of Mr. Hakim \textsc{FOURAR LAID} ENP, Algiers
+Under the supervison of Mr. Hakim \textsc{FOURAR LAIDI} ENP, Algiers
 }
 \begin{center}
 Board of Examiners : \\[0.2cm]
@@ -97,16 +97,16 @@ Board of Examiners : \\[0.2cm]
 
 \centering
 \begin{tabular}{lrlcc}
-\textbf{Président} & M. None & \textsc{test} & Prof. & ENP,  Alger \\
-\textbf{Promotrice} & Mme. None & \textsc{test} & Dr. & ENP,  Alger \\
-\textbf{Examinateur} & M. None & \textsc{test} & Prof. & ENP,  Alger
+\textbf{President} & Mme. Latifa DEBBI  & Prof. & ENP,  Alger \\
+\textbf{Examiner} & Mr. Salah Eddine TACHI & MCA. & ENP,  Alger \\
+\textbf{Supervisor} & Mr. Hakim FOURAR LAIDI  & MCA. & ENP,  Alger \\
 \end{tabular}
 
 \vspace{5mm}
 
 \rule{\linewidth}{0.3mm} \\[0.5cm]
 \begin{center}
-\textbf{ENP 2022} \\[0.1cm]
+\textbf{ENP 2023} \\[0.1cm]
 10, Avenue des Frères Oudek, Hassen Badi, BP. 182, 16200 El Harrach, Alger, Algérie. \\
 www.enp.edu.dz
 \end{center}
@@ -114,11 +114,11 @@ www.enp.edu.dz
 
 
 \begin{abstract}
-	In this thesis, we present a comprehensive analysis of various open-source embedding models and large language models (LLMs) for document-based question answering (DBQA). The goal of DBQA is to extract relevant information from a given document and answer user queries in natural language. We evaluate the performance of different embedding models, including BERT, E5, and MiniLM, in combination with open-source LLMs such as Vicuna, Falcon, and OpenLlama.
-	Our experimental setup involves a retriever-generator framework, where a retrieval system retrieves the most relevant contexts from a document using embeddings of document and query. Then we condition the generative system (LLM) with the most promising context to generate a response to the user. 
-	We benchmark the performance of these systems using a sample from the SQuAD dataset and GPT-3 as a judge.
-	This comparative analysis provides insights into the strengths and weaknesses of various open-source embedding models and LLMs for DBQA tasks. 
-	The findings of this study can guide researchers and practitioners in selecting suitable models for their specific DBQA applications and contribute to the advancement of question-answering systems.
+In this thesis, we present a comprehensive analysis of various open-source embedding models and large language models (LLMs) for document-based question answering (DBQA). The goal of DBQA is to extract relevant information from a given document and answer user queries in natural language. We evaluate the performance of different embedding models, including BERT, E5, and MiniLM, in combination with open-source LLMs such as Vicuna, Falcon, and OpenLlama.
+Our experimental setup involves a retriever-generator framework, where a retrieval system retrieves the most relevant contexts from a document using embeddings of document and query. Then we condition the generative system (LLM) with the most promising context to generate a response to the user. 
+We benchmark the performance of these systems using a sample from the SQuAD dataset and GPT-3 as a judge.
+This comparative analysis provides insights into the strengths and weaknesses of various open-source embedding models and LLMs for DBQA tasks. 
+The findings of this study can guide researchers and practitioners in selecting suitable models for their specific DBQA applications and contribute to the advancement of question-answering systems.
 \end{abstract}
 
 \clearpage
@@ -687,7 +687,7 @@ When it comes to implementing a retriever for a retriever-generator/retriever-re
 	\item or using dense embedding vectors of text produced by neural networks (“neural IR”).
 \end{enumerate}
 
-\paragraph{classic IR}
+\subsubsection{Classic IR}
 For example DrQA \cite{drqa} adopts an efficient non-learning-based search engine using bi-gram hashing
 and TF-IDF matching.
 
@@ -697,7 +697,7 @@ In terms of the effect of text granularity on performance, \cite{BERTserini} fou
 
 Multi-passage BERT QA model \cite{multibert} uses elasticSearch with BM25 \cite{BM25}. They found that splitting articles into passages with the length of 100 words by sliding window brings $4\%$ improvements, and that splitting documents into passages without overlap causes some near-boundary evidence to lose useful contexts thus decreasing the performance.
 
-\paragraph{neural IR}
+\subsubsection{Neural IR}
 Neural IR is a new category of methods for retrieval problems, it mainly uses dense representations of some neural network architectures (e.g. LSTM \cite{lstm}, BERT \cite{bert}, etc). 
 
 After the arrival of many general language models, many IR for QA systems started following this (or a slightly different) approach :
@@ -778,6 +778,7 @@ we tested a different embedding model and LLM combination, each response is then
 	\caption{Evaluation schema with GPT-3 \cite{gpt3}.}
 	\label{fig:evaluation}
 \end{figure}
+
 
 \begin{table}[h]
 	\centering
@@ -1480,4 +1481,13 @@ Falcon Answer & The ball follows a curving parabolic path in the same direction 
 
 \begin{lstlisting}[language=Python]
 \end{lstlisting}
+
+
+\begin{figure}[h]
+    \begin{center}
+      \includegraphics[width=\textwidth]{figures/demo.png}
+    \end{center}
+  \caption{Screenshot of our user-interface.}
+    \label{fig:demo}
+\end{figure}
 \end{document}
