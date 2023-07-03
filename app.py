@@ -7,54 +7,54 @@ from src.models.simple_index import SimpleIndex
 
 
 language_models = {
+    "GPT-3": GPT3,
     "OpenLlama": Llama,
     "Vicuna": Vicuna,
     "Falcon": Falcon,
-    "GPT-3": GPT3,
 }
-embedding_models = {"E5": E5, "MiniLm": MiniLM, "Bert": Bert}
+embedding_models = {"MiniLm": MiniLM, "E5": E5, "Bert": Bert}
 
 
 # Streamlit app
 def main():
-    st.title("Document-based question answering")
+    hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            p {font-size:24px !important;}
+            </style>
+            """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     # Left sidebar
-    st.sidebar.title("Abstract")
-    abstract = st.sidebar.markdown(
-        """In this thesis, we present a comprehensive analysis of various open-source embedding models and large language models (LLMs) for document-based question answering (DBQA). 
-        The goal of DBQA is to extract relevant information from a given document and answer user queries in natural language. 
-        We evaluate the performance of different embedding models, including BERT, E5, and MiniLM, in combination with open-source LLMs such as Vicuna, Falcon, and OpenLlama.
-	Our experimental setup involves a retriever-generator framework, where a retrieval system retrieves the most relevant contexts from a document using embeddings of document and query. 
-    Then we condition the generative system (LLM) with the most promising context to generate a response to the user."""
-    )
-    name = st.sidebar.text("Hachem Betrouni")
+    st.sidebar.title("Document-based question answering")
+    desc = st.sidebar.markdown("End of studies project demo")
+    name = st.sidebar.text("Hachem Betrouni ✨")
 
     # File upload
-    uploaded_file = st.file_uploader("Upload a document", type=["pdf"])
+    uploaded_file = st.file_uploader("Upload a document 📄", type=["pdf"])
     if uploaded_file is not None:
         try:
             document = read_pdf(uploaded_file)
-            st.text_area("Uploaded File", value=document, height=200)
         except Exception as e:
             st.error(f"Error: {str(e)}")
 
     # Language model selection
     language_model = st.selectbox(
-        "Select a Language Model",
+        "Select a Language Model 🤖",
         language_models.keys(),
         disabled=False if uploaded_file else True,
     )
 
     # Embedding model selection
     embedding_model = st.selectbox(
-        "Select an Embedding Model",
+        "Select an Embedding Model 🔧",
         embedding_models.keys(),
         disabled=False if uploaded_file else True,
     )
 
     query = st.text_input(
-        "Put your query here",
+        "Put your query here 👇",
         disabled=False if uploaded_file else True,
     )
 
@@ -65,7 +65,8 @@ def main():
             llm=language_models[language_model],
         )
         answer = index(context=document, question=query)
-        st.write(answer)
+        st.write("## Response ✨")
+        st.write("#### " + answer)
 
 
 if __name__ == "__main__":

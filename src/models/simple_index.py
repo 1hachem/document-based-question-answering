@@ -1,13 +1,13 @@
 from src.index import Index
 from src.similarity_measure import CosineSimilarity
-from src.text_splitter import SentenceSplitter
+from src.text_splitter import ParagarphSplitter
 
 
 class SimpleIndex:
     def __init__(self, embedding, llm) -> None:
-        self.splitter = SentenceSplitter()
+        self.splitter = ParagarphSplitter()
         self.embedder = embedding()
-        self.measure = CosineSimilarity(k=10)
+        self.measure = CosineSimilarity(k=4)
         self.llm = llm()
         self.indexed_context = None
 
